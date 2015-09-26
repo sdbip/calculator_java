@@ -6,4 +6,8 @@ public class Calculator {
 	public void enterDigit(String digit) {
 		display += digit;
 	}
+
+	public void enterDecimalPointer() {
+		display += ".";
+	}
 }

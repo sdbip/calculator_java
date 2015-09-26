@@ -21,4 +21,13 @@ public class CalculatorTests {
 		assertEquals("28", calculator.display);
 	}
 
+	@Test
+	public void decimalPointerIsAddedToDisplay() {
+		Calculator calculator = new Calculator();
+		calculator.enterDigit("2");
+		calculator.enterDecimalPointer();
+		calculator.enterDigit("8");
+		assertEquals("2.8", calculator.display);
+	}
+
 }
