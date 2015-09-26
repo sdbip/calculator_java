@@ -1,12 +1,19 @@
 package kata;
 
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Calculator {
 	private interface Operation {
 		Double perform(Double value, Double next);
 	}
+
+	final Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
+		put("+", (Double i1, Double i2) -> i1 + i2);
+		put("×", (Double i1, Double i2) -> i1 * i2);
+	}};
 
 	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
 	private String buffer = null;
@@ -48,15 +55,8 @@ public class Calculator {
 		buffer = null;
 	}
 
-	public void pressPlus() {
-		value = new Double(buffer);
-		buffer = null;
-		nextOperation = (Double i1, Double i2) -> i1 + i2;
-	}
-
-	public void pressTimes() {
-		value = new Double(buffer);
-		buffer = null;
-		nextOperation = (Double i1, Double i2) -> i1 * i2;
+	public void pressOperator(String opLabel) {
+		calculate();
+		nextOperation = OPERATORS.get(opLabel);
 	}
 }

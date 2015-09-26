@@ -72,7 +72,7 @@ public class CalculatorTests {
 	@Test
 	public void plusAddsToTheCurrentValue() {
 		calculator.enterDigit("1");
-		calculator.pressPlus();
+		calculator.pressOperator("+");
 		calculator.enterDigit("1");
 		calculator.calculate();
 		assertEquals("2", calculator.getDisplay());
@@ -81,7 +81,7 @@ public class CalculatorTests {
 	@Test
 	public void timesMultipliesAgainstTheCurrentValue() {
 		calculator.enterDigit("3");
-		calculator.pressTimes();
+		calculator.pressOperator("×");
 		calculator.enterDigit("2");
 		calculator.calculate();
 		assertEquals("6", calculator.getDisplay());
