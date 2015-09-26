@@ -35,6 +35,11 @@ public class Calculator {
 	}
 
 	public void calculate() {
+		value += new Double(buffer);
+		buffer = null;
+	}
+
+	public void pressPlus() {
 		value = new Double(buffer);
 		buffer = null;
 	}

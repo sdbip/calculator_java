@@ -69,4 +69,13 @@ public class CalculatorTests {
 		assertEquals("1", calculator.getDisplay());
 	}
 
+	@Test
+	public void plusAddsToTheCurrentValue() {
+		calculator.enterDigit("1");
+		calculator.pressPlus();
+		calculator.enterDigit("1");
+		calculator.calculate();
+		assertEquals("2", calculator.getDisplay());
+	}
+
 }
