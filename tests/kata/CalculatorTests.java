@@ -14,7 +14,7 @@ public class CalculatorTests {
 	@Before
 	public void setUp() throws Exception {
 		calculator = new Calculator();
-		calculator.locale = Locale.US;
+		calculator.setLocale(Locale.US);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class CalculatorTests {
 
 	@Test
 	public void decimalPointerHonorsLocale() {
-		calculator.locale = Locale.FRANCE;
+		calculator.setLocale(Locale.FRANCE);
 		calculator.enterDigit("2");
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
