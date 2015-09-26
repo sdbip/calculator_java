@@ -2,16 +2,19 @@ package kata;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Calculator {
 	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
-	private String display = "";
 	private String buffer = null;
+	private double value = 0;
 
 	public String getDisplay() {
-		if (buffer == null)
-			return display;
+		if (buffer == null) {
+			String result = Double.toString(value);
+			if (result.endsWith(".0"))
+				result = Integer.toString((int) value);
+			return result;
+		}
 		else return buffer;
 	}
 
@@ -21,19 +24,18 @@ public class Calculator {
 	}
 
 	public void enterDigit(String digit) {
-		if (buffer == null) display = "";
-		display += digit;
-		buffer = display;
+		if (buffer == null) buffer = "";
+		buffer += digit;
 	}
 
 	public void enterDecimalPointer() {
-		if (Objects.equals(display, ""))
-			display = "0";
-		display += dfs.getDecimalSeparator();
-		buffer = display;
+		if (buffer == null)
+			buffer = "0";
+		buffer += dfs.getDecimalSeparator();
 	}
 
 	public void calculate() {
+		value = new Double(buffer);
 		buffer = null;
 	}
 }
