@@ -15,4 +15,8 @@ public class Calculator {
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols(locale);
 		display += dfs.getDecimalSeparator();
 	}
+
+	public void calculate() {
+		display = "";
+	}
 }

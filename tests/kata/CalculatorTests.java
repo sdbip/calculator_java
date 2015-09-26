@@ -47,4 +47,12 @@ public class CalculatorTests {
 		assertEquals("2,8", calculator.display);
 	}
 
+	@Test
+	public void equalsClearsBuffer() {
+		calculator.enterDigit("1");
+		calculator.calculate();
+		calculator.enterDigit("1");
+		assertEquals("1", calculator.display);
+	}
+
 }
