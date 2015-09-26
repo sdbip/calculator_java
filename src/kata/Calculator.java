@@ -13,6 +13,8 @@ public class Calculator {
 	final Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
 		put("+", (Double i1, Double i2) -> i1 + i2);
 		put("×", (Double i1, Double i2) -> i1 * i2);
+		put("−", (Double i1, Double i2) -> i1 - i2);
+		put("÷", (Double i1, Double i2) -> i1 / i2);
 	}};
 
 	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());

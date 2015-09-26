@@ -87,4 +87,22 @@ public class CalculatorTests {
 		assertEquals("6", calculator.getDisplay());
 	}
 
+	@Test
+	public void minusSubtractsFromTheCurrentValue() {
+		calculator.enterDigit("1");
+		calculator.pressOperator("−");
+		calculator.enterDigit("1");
+		calculator.calculate();
+		assertEquals("0", calculator.getDisplay());
+	}
+
+	@Test
+	public void divisionDividesAgainstTheCurrentValue() {
+		calculator.enterDigit("3");
+		calculator.pressOperator("÷");
+		calculator.enterDigit("2");
+		calculator.calculate();
+		assertEquals("1.5", calculator.getDisplay());
+	}
+
 }
