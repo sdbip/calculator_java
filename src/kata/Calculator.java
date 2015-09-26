@@ -1,9 +1,9 @@
 package kata;
 
 public class Calculator {
-	public String display = "8";
+	public String display = "";
 
 	public void enterDigit(String digit) {
-
+		display += digit;
 	}
 }

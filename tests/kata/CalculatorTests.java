@@ -13,4 +13,12 @@ public class CalculatorTests {
 		assertEquals("8", calculator.display);
 	}
 
+	@Test
+	public void severalPressedDigitsAreDisplayedInOrder() {
+		Calculator calculator = new Calculator();
+		calculator.enterDigit("2");
+		calculator.enterDigit("8");
+		assertEquals("28", calculator.display);
+	}
+
 }
