@@ -6,7 +6,11 @@ import java.util.Objects;
 
 public class Calculator {
 	public Locale locale = Locale.getDefault();
-	public String display = "";
+	private String display = "";
+
+	public String getDisplay() {
+		return display;
+	}
 
 	public void enterDigit(String digit) {
 		display += digit;

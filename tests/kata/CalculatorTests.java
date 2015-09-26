@@ -20,14 +20,14 @@ public class CalculatorTests {
 	@Test
 	public void pressedDigitIsDisplayed() {
 		calculator.enterDigit("8"); // GUI identifies button by its label
-		assertEquals("8", calculator.display);
+		assertEquals("8", calculator.getDisplay());
 	}
 
 	@Test
 	public void severalPressedDigitsAreDisplayedInOrder() {
 		calculator.enterDigit("2");
 		calculator.enterDigit("8");
-		assertEquals("28", calculator.display);
+		assertEquals("28", calculator.getDisplay());
 	}
 
 	@Test
@@ -35,7 +35,7 @@ public class CalculatorTests {
 		calculator.enterDigit("2");
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
-		assertEquals("2.8", calculator.display);
+		assertEquals("2.8", calculator.getDisplay());
 	}
 
 	@Test
@@ -44,14 +44,14 @@ public class CalculatorTests {
 		calculator.enterDigit("2");
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
-		assertEquals("2,8", calculator.display);
+		assertEquals("2,8", calculator.getDisplay());
 	}
 
 	@Test
 	public void decimalPointWhenEmptyAddsZero() {
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("2");
-		assertEquals("0.2", calculator.display);
+		assertEquals("0.2", calculator.getDisplay());
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class CalculatorTests {
 		calculator.enterDigit("1");
 		calculator.calculate();
 		calculator.enterDigit("1");
-		assertEquals("1", calculator.display);
+		assertEquals("1", calculator.getDisplay());
 	}
 
 }
