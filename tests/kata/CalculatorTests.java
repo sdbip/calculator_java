@@ -48,6 +48,13 @@ public class CalculatorTests {
 	}
 
 	@Test
+	public void decimalPointWhenEmptyAddsZero() {
+		calculator.enterDecimalPointer();
+		calculator.enterDigit("2");
+		assertEquals("0.2", calculator.display);
+	}
+
+	@Test
 	public void equalsClearsBuffer() {
 		calculator.enterDigit("1");
 		calculator.calculate();
