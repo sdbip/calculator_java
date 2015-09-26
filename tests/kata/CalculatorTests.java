@@ -62,4 +62,11 @@ public class CalculatorTests {
 		assertEquals("1", calculator.getDisplay());
 	}
 
+	@Test
+	public void equalsDoesNotClearDisplay() {
+		calculator.enterDigit("1");
+		calculator.calculate();
+		assertEquals("1", calculator.getDisplay());
+	}
+
 }
