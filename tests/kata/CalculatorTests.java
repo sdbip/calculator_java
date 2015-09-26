@@ -78,4 +78,13 @@ public class CalculatorTests {
 		assertEquals("2", calculator.getDisplay());
 	}
 
+	@Test
+	public void timesMultipliesAgainstTheCurrentValue() {
+		calculator.enterDigit("3");
+		calculator.pressTimes();
+		calculator.enterDigit("2");
+		calculator.calculate();
+		assertEquals("6", calculator.getDisplay());
+	}
+
 }
