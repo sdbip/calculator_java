@@ -51,10 +51,10 @@ class Buffer {
 	}
 
 	double toValue() {
+		String buf = buffer;
+		makeEmpty();
 		try {
-			double value = displayFormatter.parse(buffer);
-			makeEmpty();
-			return value;
+			return displayFormatter.parse(buf);
 		} catch (ParseException e) {
 			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
 			return 0.0; // Why do I need to put this line here? I already crashed!
