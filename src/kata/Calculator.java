@@ -9,11 +9,11 @@ public class Calculator {
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private boolean nextPrecedes = false;
 
-	private interface Operation {
-		Double perform(Double storedValue, Double enteredValue);
+	private interface Operator {
+		Double call(Double storedValue, Double enteredValue);
 	}
 
-	final static Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
+	final static Map<String, Operator> OPERATORS = new HashMap<String, Operator>() {{
 		put("+", (Double storedValue, Double enteredValue) -> storedValue + enteredValue);
 		put("×", (Double storedValue, Double enteredValue) -> storedValue * enteredValue);
 		put("−", (Double storedValue, Double enteredValue) -> storedValue - enteredValue);
@@ -22,7 +22,7 @@ public class Calculator {
 
 	private String buffer = null;
 	private double value = 0;
-	private Operation nextOperation;
+	private Operator nextOperator;
 
 	public String getDisplay() {
 		if (buffer == null) {
@@ -49,22 +49,22 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		value = performOperation(nextOperation, value, readBuffer());
+		value = callOperator(nextOperator, value, readBuffer());
 	}
 
 	public void pressOperator(String opLabel) {
 		if (!nextPrecedes && hasPrecedence(opLabel)) {
 			nextPrecedes = true;
 			Double bufferValue = readBuffer();
-			Operation next = OPERATORS.get(opLabel);
-			Operation previous = nextOperation;
-			nextOperation = (storedValue, enteredValue) -> {
-				Double intermediate = next.perform(bufferValue, enteredValue);
-				return performOperation(previous, storedValue, intermediate);
+			Operator next = OPERATORS.get(opLabel);
+			Operator previous = nextOperator;
+			nextOperator = (storedValue, enteredValue) -> {
+				Double intermediate = next.call(bufferValue, enteredValue);
+				return callOperator(previous, storedValue, intermediate);
 			};
 		} else {
 			calculate();
-			nextOperation = OPERATORS.get(opLabel);
+			nextOperator = OPERATORS.get(opLabel);
 		}
 	}
 
@@ -89,10 +89,10 @@ public class Calculator {
 		System.exit(1);
 	}
 
-	private Double performOperation(Operation operation, Double storedValue, Double enteredValue) {
-		if (operation == null)
+	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
+		if (operator == null)
 			return enteredValue;
-		return operation.perform(storedValue, enteredValue);
+		return operator.call(storedValue, enteredValue);
 	}
 
 	private boolean hasPrecedence(String opLabel) {
