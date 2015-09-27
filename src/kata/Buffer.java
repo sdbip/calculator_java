@@ -5,20 +5,22 @@ import java.util.Locale;
 
 class Buffer {
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
+	private String buffer = null;
 
 	String getDisplayedValue(double value, String buffer) {
 		return buffer == null ? displayFormatter.format(value) : buffer;
 	}
 
 	String enterDigit(String digit, String buffer) {
-		buffer = buffer != null ? buffer + digit : digit;
-		return buffer;
+		this.buffer = buffer != null ? buffer + digit : digit;
+		return this.buffer;
 	}
 
 	String appendDecimalPointer(String buffer) {
 		if (buffer == null) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
-		return buffer;
+		this.buffer = buffer;
+		return this.buffer;
 	}
 
 	double toValue(String buffer) {
