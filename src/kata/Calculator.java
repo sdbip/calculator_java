@@ -24,7 +24,7 @@ public class Calculator {
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		return buf.getDisplayedValue(displayFormatter, value, buffer);
+		return buf.getDisplayedValue(value, buffer);
 	}
 
 	public void enterDigit(String digit) {
@@ -32,7 +32,7 @@ public class Calculator {
 	}
 
 	public void enterDecimalPointer() {
-		buffer = buf.appendDecimalPointer(buffer, displayFormatter);
+		buffer = buf.appendDecimalPointer(buffer);
 	}
 
 	public void calculate() {
@@ -62,7 +62,7 @@ public class Calculator {
 	}
 
 	private double convertBufferToValue() {
-		return buf.toValue(displayFormatter, buffer, this);
+		return buf.toValue(buffer);
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
@@ -76,5 +76,6 @@ public class Calculator {
 	// Only intended for testing.
 	void setLocale(Locale locale) {
 		displayFormatter = new DisplayFormatter(locale);
+		buf.displayFormatter = displayFormatter;
 	}
 }

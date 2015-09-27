@@ -3,8 +3,10 @@ package kata;
 import java.text.ParseException;
 
 class Buffer {
-	String getDisplayedValue(DisplayFormatter formatter, double value, String buffer) {
-		return buffer == null ? formatter.format(value) : buffer;
+	DisplayFormatter displayFormatter = new DisplayFormatter();
+
+	String getDisplayedValue(double value, String buffer) {
+		return buffer == null ? displayFormatter.format(value) : buffer;
 	}
 
 	String enterDigit(String digit, String buffer) {
@@ -12,13 +14,13 @@ class Buffer {
 		return buffer;
 	}
 
-	String appendDecimalPointer(String buffer, DisplayFormatter displayFormatter) {
+	String appendDecimalPointer(String buffer) {
 		if (buffer == null) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
 		return buffer;
 	}
 
-	double toValue(DisplayFormatter displayFormatter, String buffer, Calculator calculator) {
+	double toValue(String buffer) {
 		try {
 			return displayFormatter.parse(buffer);
 		} catch (ParseException e) {
