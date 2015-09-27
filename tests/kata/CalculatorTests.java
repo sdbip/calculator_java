@@ -105,4 +105,15 @@ public class CalculatorTests {
 		assertEquals("1.5", calculator.getDisplay());
 	}
 
+	@Test
+	public void multiplicationPrecedesAddition() {
+		calculator.enterDigit("1");
+		calculator.pressOperator("+");
+		calculator.enterDigit("2");
+		calculator.pressOperator("×");
+		calculator.enterDigit("3");
+		calculator.calculate();
+		assertEquals("7", calculator.getDisplay());
+	}
+
 }

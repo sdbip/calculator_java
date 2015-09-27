@@ -58,7 +58,17 @@ public class Calculator {
 	}
 
 	public void pressOperator(String opLabel) {
-		calculate();
-		nextOperation = OPERATORS.get(opLabel);
+		if (hasPrecedence(opLabel)) {
+			Double bufferValue = new Double(buffer);
+			nextOperation = (i1, i2) -> i1 + i2 * bufferValue;
+			buffer = null;
+		} else {
+			calculate();
+			nextOperation = OPERATORS.get(opLabel);
+		}
+	}
+
+	private boolean hasPrecedence(String opLabel) {
+		return opLabel.equals("×");
 	}
 }
