@@ -51,11 +51,7 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		if (nextOperation == null)
-			value = new Double(buffer);
-		else {
-			value = nextOperation.perform(value, new Double(buffer));
-		}
+		value = performOperation(nextOperation, value, new Double(buffer));
 		buffer = null;
 	}
 
@@ -67,15 +63,19 @@ public class Calculator {
 			Operation previous = nextOperation;
 			nextOperation = (i1, i2) -> {
 				Double intermediate = next.perform(bufferValue, i2);
-				if (previous == null)
-					return intermediate;
-				return previous.perform(i1, intermediate);
+				return performOperation(previous, i1, intermediate);
 			};
 			buffer = null;
 		} else {
 			calculate();
 			nextOperation = OPERATORS.get(opLabel);
 		}
+	}
+
+	private Double performOperation(Operation operation, Double storedValue, Double enteredValue) {
+		if (operation == null)
+			return enteredValue;
+		return operation.perform(storedValue, enteredValue);
 	}
 
 	private boolean hasPrecedence(String opLabel) {
