@@ -13,12 +13,8 @@ class Buffer {
 		}
 
 		public Content(String buffer, String alternate) {
-			if (isEmpty()) {
-				Buffer.this.buffer = ""; // !isEmpty() in append()
-				this.buffer = alternate;
-			} else {
-				this.buffer = buffer;
-			}
+			this(buffer);
+			if (isEmpty()) this.buffer = alternate;
 		}
 
 		public void append(String digit) {
@@ -39,13 +35,14 @@ class Buffer {
 			return isEmpty() ? displayFormatter.format(value) : buffer;
 		}
 
-		public boolean isEmpty_() {
+		private boolean isEmpty() {
 			return buffer == null;
 		}
 	}
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
+	private Content content = new Content(null);
 
 	String getDisplayedValue(double value) {
 		Content content = new Content(buffer);
@@ -53,13 +50,13 @@ class Buffer {
 	}
 
 	void enterDigit(String digit) {
-		Content content = new Content(buffer);
+		content = new Content(buffer);
 		content.append(digit);
 		buffer = content.toString();
 	}
 
 	void appendDecimalPointer() {
-		Content content = new Content(buffer, "0");
+		content = new Content(buffer, "0");
 		content.append("" + displayFormatter.getDecimalSeparator());
 		buffer = content.toString();
 	}
@@ -76,7 +73,7 @@ class Buffer {
 
 	private String clear() {
 		String buf = buffer;
-		Content content = new Content(buffer);
+		content = new Content(buffer);
 		content = content.clear();
 		buffer = content.toString();
 		return buf;
@@ -86,11 +83,6 @@ class Buffer {
 		System.out.println(message);
 		System.out.println(e.getLocalizedMessage());
 		System.exit(1);
-	}
-
-	private boolean isEmpty() {
-		Content content = new Content(buffer);
-		return content.isEmpty_();
 	}
 
 	// Only intended for testing.
