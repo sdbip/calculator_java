@@ -10,7 +10,7 @@ public class EmptyContent implements Content {
 	}
 
 	public String get() {
-		return null;
+		return "0";
 	}
 
 	public boolean isEmpty() {

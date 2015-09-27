@@ -58,6 +58,12 @@ public class CalculatorTests {
 	}
 
 	@Test
+	public void initialValueIs0() {
+		calculator.calculate();
+		assertEquals("0", calculator.getDisplay());
+	}
+
+	@Test
 	public void decimalPointWhenEmptyAddsZero() {
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("2");
