@@ -3,6 +3,7 @@ package kata;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +15,7 @@ public class CalculatorTests {
 	@Before
 	public void setUp() throws Exception {
 		calculator = new Calculator();
-		calculator.buffer.setLocale(Locale.US);
+		setLocale(Locale.US);
 	}
 
 	@Test
@@ -40,7 +41,7 @@ public class CalculatorTests {
 
 	@Test
 	public void decimalPointerHonorsLocale() {
-		calculator.buffer.setLocale(Locale.FRANCE);
+		setLocale(Locale.FRANCE);
 		calculator.enterDigit("2");
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
@@ -49,7 +50,7 @@ public class CalculatorTests {
 
 	@Test
 	public void calculateHonorsLocale() {
-		calculator.buffer.setLocale(Locale.FRANCE);
+		setLocale(Locale.FRANCE);
 		calculator.enterDigit("2");
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
@@ -152,6 +153,17 @@ public class CalculatorTests {
 		calculator.enterDigit("2");
 		calculator.calculate();
 		assertEquals("2", calculator.getDisplay());
+	}
+
+	private void setLocale(Locale locale) {
+		try {
+			Field field = Calculator.class.getDeclaredField("buffer");
+			field.setAccessible(true);
+			Buffer buffer = (Buffer) field.get(calculator);
+			buffer.setLocale(locale);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			throw new RuntimeException(e); // Unchecked
+		}
 	}
 
 }

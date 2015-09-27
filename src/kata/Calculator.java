@@ -14,9 +14,7 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
-	// TODO: Reduce access for production code.
-	// Ony made package visible for tests.
-	final Buffer buffer = new Buffer();
+	private final Buffer buffer = new Buffer();
 
 	private double value = 0;
 	private Operator nextOperator;
