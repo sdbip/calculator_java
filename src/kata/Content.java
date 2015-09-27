@@ -2,7 +2,19 @@ package kata;
 
 public interface Content {
 	static Content empty() {
-		return new ContentImpl(null);
+		return new Content() {
+			public Content append(String digit) {
+				return new ContentImpl(digit);
+			}
+
+			public String getDisplayedValue(double value, DisplayFormatter displayFormatter) {
+				return displayFormatter.format(value);
+			}
+
+			public boolean isEmpty() {
+				return true;
+			}
+		};
 	}
 
 	Content append(String digit);
