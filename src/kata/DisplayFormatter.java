@@ -6,16 +6,13 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public class DisplayFormatter {
-	private final DecimalFormatSymbols dfs;
+	private final DecimalFormatSymbols symbols;
 	private final NumberFormat numberFormat;
 
-	public DisplayFormatter() {
-		dfs = new DecimalFormatSymbols(Locale.getDefault());
-		numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-	}
+	public DisplayFormatter() { this(Locale.getDefault()); }
 
 	public DisplayFormatter(Locale locale) {
-		dfs = new DecimalFormatSymbols(locale);
+		symbols = new DecimalFormatSymbols(locale);
 		numberFormat = NumberFormat.getNumberInstance(locale);
 	}
 
@@ -29,6 +26,6 @@ public class DisplayFormatter {
 	}
 
 	char getDecimalSeparator() {
-		return dfs.getDecimalSeparator();
+		return symbols.getDecimalSeparator();
 	}
 }
