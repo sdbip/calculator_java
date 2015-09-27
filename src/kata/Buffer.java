@@ -29,6 +29,11 @@ class Buffer {
 		public String toString() {
 			return buffer;
 		}
+
+		public Content clear() {
+			buffer = null;
+			return this;
+		}
 	}
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
@@ -51,8 +56,7 @@ class Buffer {
 	}
 
 	double toValue() {
-		String buf = buffer;
-		makeEmpty();
+		String buf = clear();
 		try {
 			return displayFormatter.parse(buf);
 		} catch (ParseException e) {
@@ -61,14 +65,18 @@ class Buffer {
 		}
 	}
 
+	private String clear() {
+		String buf = buffer;
+		Content content = new Content(buffer);
+		content = content.clear();
+		buffer = content.toString();
+		return buf;
+	}
+
 	private void crashApplication(String message, Throwable e) {
 		System.out.println(message);
 		System.out.println(e.getLocalizedMessage());
 		System.exit(1);
-	}
-
-	private void makeEmpty() {
-		buffer = null;
 	}
 
 	private boolean isEmpty() {
