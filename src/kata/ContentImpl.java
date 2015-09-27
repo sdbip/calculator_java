@@ -10,6 +10,9 @@ class ContentImpl implements Content {
 	public Content append(String digit) {
 		return new ContentImpl(buffer + digit);
 	}
+	public Content append(char decimalSeparator) {
+		return new ContentImpl(buffer + decimalSeparator);
+	}
 
 	public String get() {
 		return buffer;

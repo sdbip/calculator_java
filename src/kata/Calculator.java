@@ -24,8 +24,8 @@ public class Calculator {
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		String buf = getDisplayedValue();
-		return buf != null ? buf : formatValue(value);
+		String buf = content.get();
+		return buf != null ? buf : displayFormatter.format(value);
 	}
 
 	public void enterDigit(String digit) {
@@ -33,7 +33,7 @@ public class Calculator {
 	}
 
 	public void enterDecimalPointer() {
-		appendDecimalPointer();
+		content = content.append(displayFormatter.getDecimalSeparator());
 	}
 
 	public void calculate() {
@@ -56,19 +56,6 @@ public class Calculator {
 		}
 	}
 
-	String getDisplayedValue() {
-		return content.get();
-	}
-
-	String formatValue(double value) {
-		return displayFormatter.format(value);
-	}
-
-
-	void appendDecimalPointer() {
-		if (content.isEmpty()) content = content.append("0");
-		content = content.append("" + displayFormatter.getDecimalSeparator());
-	}
 
 	double toValue() {
 		String buf = content.get();
