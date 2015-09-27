@@ -14,32 +14,34 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
-	final Buffer buf = new Buffer();
+	// TODO: Reduce access for production code.
+	// Ony made package visible for tests.
+	final Buffer buffer = new Buffer();
 
 	private double value = 0;
 	private Operator nextOperator;
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		return buf.getDisplayedValue(value);
+		return buffer.getDisplayedValue(value);
 	}
 
 	public void enterDigit(String digit) {
-		buf.enterDigit(digit);
+		buffer.enterDigit(digit);
 	}
 
 	public void enterDecimalPointer() {
-		buf.appendDecimalPointer();
+		buffer.appendDecimalPointer();
 	}
 
 	public void calculate() {
-		value = callOperator(nextOperator, value, readBuffer());
+		value = callOperator(nextOperator, value, buffer.toValue());
 	}
 
 	public void pressOperator(String opLabel) {
 		if (!nextPrecedes && hasPrecedence(opLabel)) {
 			nextPrecedes = true;
-			Double bufferValue = readBuffer();
+			Double bufferValue = buffer.toValue();
 			Operator next = OPERATORS.get(opLabel);
 			Operator previous = nextOperator;
 			nextOperator = (storedValue, enteredValue) -> {
@@ -50,15 +52,6 @@ public class Calculator {
 			calculate();
 			nextOperator = OPERATORS.get(opLabel);
 		}
-	}
-
-	private Double readBuffer() {
-		Double value = convertBufferToValue();
-		return value;
-	}
-
-	private double convertBufferToValue() {
-		return buf.toValue();
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
