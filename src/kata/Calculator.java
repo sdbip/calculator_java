@@ -13,7 +13,7 @@ public class Calculator {
 		Double perform(Double storedValue, Double enteredValue);
 	}
 
-	final Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
+	final static Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
 		put("+", (Double storedValue, Double enteredValue) -> storedValue + enteredValue);
 		put("×", (Double storedValue, Double enteredValue) -> storedValue * enteredValue);
 		put("−", (Double storedValue, Double enteredValue) -> storedValue - enteredValue);
