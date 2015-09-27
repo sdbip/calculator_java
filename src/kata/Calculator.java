@@ -60,7 +60,8 @@ public class Calculator {
 	public void pressOperator(String opLabel) {
 		if (hasPrecedence(opLabel)) {
 			Double bufferValue = new Double(buffer);
-			nextOperation = (i1, i2) -> i1 + i2 * bufferValue;
+			Operation next = OPERATORS.get(opLabel);
+			nextOperation = (i1, i2) -> i1 + next.perform(bufferValue, i2);
 			buffer = null;
 		} else {
 			calculate();
