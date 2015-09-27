@@ -16,7 +16,7 @@ class ContentImpl implements Content {
 	}
 
 	public String getDisplayedValue(double value, DisplayFormatter displayFormatter) {
-		return isEmpty() ? displayFormatter.format(value) : buffer;
+		return buffer;
 	}
 
 	public boolean isEmpty() {
