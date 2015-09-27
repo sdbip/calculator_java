@@ -6,7 +6,6 @@ import java.util.Locale;
 class Buffer {
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
-	private String buffer = null;
 	private Content content = Content.empty();
 
 	String getDisplayedValue(double value) {
@@ -15,13 +14,11 @@ class Buffer {
 
 	void enterDigit(String digit) {
 		content.append(digit);
-		buffer = content.toString();
 	}
 
 	void appendDecimalPointer() {
 		if (content.isEmpty()) content.append("0");
 		content.append("" + displayFormatter.getDecimalSeparator());
-		buffer = content.toString();
 	}
 
 	double toValue() {
@@ -37,7 +34,6 @@ class Buffer {
 	private String clear() {
 		String buf = content.toString();
 		content = Content.empty();
-		buffer = content.toString();
 		return buf;
 	}
 
