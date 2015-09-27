@@ -1,7 +1,6 @@
 package kata;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Calculator {
@@ -16,7 +15,7 @@ public class Calculator {
 	}};
 
 	private String buffer = null;
-	private Buffer buf = new Buffer();
+	final Buffer buf = new Buffer();
 
 	private double value = 0;
 	private Operator nextOperator;
@@ -72,8 +71,4 @@ public class Calculator {
 		return "×÷".contains(opLabel);
 	}
 
-	// Only intended for testing.
-	void setLocale(Locale locale) {
-		buf.displayFormatter = new DisplayFormatter(locale);
-	}
 }

@@ -1,9 +1,10 @@
 package kata;
 
 import java.text.ParseException;
+import java.util.Locale;
 
 class Buffer {
-	DisplayFormatter displayFormatter = new DisplayFormatter();
+	private DisplayFormatter displayFormatter = new DisplayFormatter();
 
 	String getDisplayedValue(double value, String buffer) {
 		return buffer == null ? displayFormatter.format(value) : buffer;
@@ -33,5 +34,10 @@ class Buffer {
 		System.out.println(message);
 		System.out.println(e.getLocalizedMessage());
 		System.exit(1);
+	}
+
+	// Only intended for testing.
+	void setLocale(Locale locale) {
+		displayFormatter = new DisplayFormatter(locale);
 	}
 }
