@@ -14,7 +14,6 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
-	private String buffer = null;
 	final Buffer buf = new Buffer();
 
 	private double value = 0;
@@ -26,11 +25,11 @@ public class Calculator {
 	}
 
 	public void enterDigit(String digit) {
-		buffer = buf.enterDigit(digit);
+		buf.enterDigit(digit);
 	}
 
 	public void enterDecimalPointer() {
-		buffer = buf.appendDecimalPointer();
+		buf.appendDecimalPointer();
 	}
 
 	public void calculate() {
@@ -55,7 +54,6 @@ public class Calculator {
 
 	private Double readBuffer() {
 		Double value = convertBufferToValue();
-		buffer = null;
 		return value;
 	}
 
