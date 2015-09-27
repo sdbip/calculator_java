@@ -13,12 +13,12 @@ class Buffer {
 	}
 
 	void enterDigit(String digit) {
-		content.append(digit);
+		content = content.append(digit);
 	}
 
 	void appendDecimalPointer() {
-		if (content.isEmpty()) content.append("0");
-		content.append("" + displayFormatter.getDecimalSeparator());
+		if (content.isEmpty()) content = content.append("0");
+		content = content.append("" + displayFormatter.getDecimalSeparator());
 	}
 
 	double toValue() {

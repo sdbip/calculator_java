@@ -5,7 +5,7 @@ public interface Content {
 		return new ContentImpl(null);
 	}
 
-	void append(String digit);
+	Content append(String digit);
 
 	@Override
 	String toString();
