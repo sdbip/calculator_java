@@ -22,19 +22,14 @@ class Buffer {
 	}
 
 	double toValue() {
-		String buf = clear();
+		String buf = content.get();
+		content = Content.EMPTY;
 		try {
 			return displayFormatter.parse(buf);
 		} catch (ParseException e) {
 			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
 			return 0.0; // Why do I need to put this line here? I already crashed!
 		}
-	}
-
-	private String clear() {
-		String buf = content.toString();
-		content = Content.EMPTY;
-		return buf;
 	}
 
 	private void crashApplication(String message, Throwable e) {

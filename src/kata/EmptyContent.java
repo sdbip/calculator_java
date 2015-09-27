@@ -9,6 +9,10 @@ public class EmptyContent implements Content {
 		return displayFormatter.format(value);
 	}
 
+	public String get() {
+		return null;
+	}
+
 	public boolean isEmpty() {
 		return true;
 	}

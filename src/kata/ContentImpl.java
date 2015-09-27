@@ -11,7 +11,7 @@ class ContentImpl implements Content {
 		return new ContentImpl(buffer + digit);
 	}
 
-	public String toString() {
+	public String get() {
 		return buffer;
 	}
 
