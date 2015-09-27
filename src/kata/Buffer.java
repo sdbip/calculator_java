@@ -5,43 +5,13 @@ import java.util.Locale;
 
 class Buffer {
 
-	class Content {
-		String buffer;
-
-		public Content(String buffer) {
-			this.buffer = buffer;
-		}
-
-		public Content(String buffer, String alternate) {
-			this(buffer);
-			if (isEmpty()) this.buffer = alternate;
-		}
-
-		public void append(String digit) {
-			buffer = !isEmpty() ? buffer + digit : digit;
-		}
-
-		@Override
-		public String toString() {
-			return buffer;
-		}
-
-		public String getDisplayedValue(double value) {
-			return isEmpty() ? displayFormatter.format(value) : buffer;
-		}
-
-		private boolean isEmpty() {
-			return buffer == null;
-		}
-	}
-
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
 	private Content content = new Content(null);
 
 	String getDisplayedValue(double value) {
 		Content content = new Content(buffer);
-		return content.getDisplayedValue(value);
+		return content.getDisplayedValue(value, displayFormatter);
 	}
 
 	void enterDigit(String digit) {
