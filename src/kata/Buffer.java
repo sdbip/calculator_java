@@ -34,13 +34,22 @@ class Buffer {
 			buffer = null;
 			return this;
 		}
+
+		public String getDisplayedValue(double value) {
+			return isEmpty() ? displayFormatter.format(value) : buffer;
+		}
+
+		public boolean isEmpty_() {
+			return buffer == null;
+		}
 	}
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
 
 	String getDisplayedValue(double value) {
-		return isEmpty() ? displayFormatter.format(value) : buffer;
+		Content content = new Content(buffer);
+		return content.getDisplayedValue(value);
 	}
 
 	void enterDigit(String digit) {
@@ -80,7 +89,8 @@ class Buffer {
 	}
 
 	private boolean isEmpty() {
-		return buffer == null;
+		Content content = new Content(buffer);
+		return content.isEmpty_();
 	}
 
 	// Only intended for testing.
