@@ -4,6 +4,24 @@ import java.text.ParseException;
 import java.util.Locale;
 
 class Buffer {
+
+	class Content {
+		String buffer;
+
+		public Content(String buffer) {
+			this.buffer = buffer;
+		}
+
+		public void append(String digit) {
+			buffer = !isEmpty() ? buffer + digit : digit;
+		}
+
+		@Override
+		public String toString() {
+			return buffer;
+		}
+	}
+
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
 
@@ -12,7 +30,9 @@ class Buffer {
 	}
 
 	void enterDigit(String digit) {
-		buffer = !isEmpty() ? buffer + digit : digit;
+		Content content = new Content(buffer);
+		content.append(digit);
+		buffer = content.toString();
 	}
 
 	void appendDecimalPointer() {
