@@ -12,6 +12,10 @@ class Content {
 		if (isEmpty()) this.buffer = alternate;
 	}
 
+	static Content empty() {
+		return new Content(null);
+	}
+
 	public void append(String digit) {
 		buffer = !isEmpty() ? buffer + digit : digit;
 	}

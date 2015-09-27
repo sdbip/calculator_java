@@ -7,7 +7,7 @@ class Buffer {
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
-	private Content content = new Content(null);
+	private Content content = Content.empty();
 
 	String getDisplayedValue(double value) {
 		Content content = new Content(buffer);
@@ -38,7 +38,7 @@ class Buffer {
 
 	private String clear() {
 		String buf = content.toString();
-		content = new Content(null);
+		content = Content.empty();
 		buffer = content.toString();
 		return buf;
 	}
