@@ -6,7 +6,7 @@ import java.util.Locale;
 class Buffer {
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
-	private ContentImpl content = ContentImpl.empty();
+	private Content content = Content.empty();
 
 	String getDisplayedValue(double value) {
 		return content.getDisplayedValue(value, displayFormatter);
@@ -33,7 +33,7 @@ class Buffer {
 
 	private String clear() {
 		String buf = content.toString();
-		content = ContentImpl.empty();
+		content = Content.empty();
 		return buf;
 	}
 

@@ -1,21 +1,16 @@
 package kata;
 
-class ContentImpl {
+class ContentImpl implements Content {
 	String buffer;
 
 	public ContentImpl(String buffer) {
 		this.buffer = buffer;
 	}
 
-	static ContentImpl empty() {
-		return new ContentImpl(null);
-	}
-
 	public void append(String digit) {
 		buffer = !isEmpty() ? buffer + digit : digit;
 	}
 
-	@Override
 	public String toString() {
 		return buffer;
 	}
@@ -24,7 +19,7 @@ class ContentImpl {
 		return isEmpty() ? displayFormatter.format(value) : buffer;
 	}
 
-	boolean isEmpty() {
+	public boolean isEmpty() {
 		return buffer == null;
 	}
 }
