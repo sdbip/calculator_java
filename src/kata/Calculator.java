@@ -6,6 +6,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Calculator {
+	private boolean nextPrecedes = false;
+
 	private interface Operation {
 		Double perform(Double value, Double next);
 	}
@@ -58,7 +60,8 @@ public class Calculator {
 	}
 
 	public void pressOperator(String opLabel) {
-		if (hasPrecedence(opLabel)) {
+		if (!nextPrecedes && hasPrecedence(opLabel)) {
+			nextPrecedes = true;
 			Double bufferValue = new Double(buffer);
 			Operation next = OPERATORS.get(opLabel);
 			Operation previous = nextOperation;

@@ -127,4 +127,15 @@ public class CalculatorTests {
 		assertEquals("2", calculator.getDisplay());
 	}
 
+	@Test
+	public void precedentOperatorsAreNotFlipped() {
+		calculator.enterDigit("2");
+		calculator.pressOperator("÷");
+		calculator.enterDigit("2");
+		calculator.pressOperator("×");
+		calculator.enterDigit("2");
+		calculator.calculate();
+		assertEquals("2", calculator.getDisplay());
+	}
+
 }
