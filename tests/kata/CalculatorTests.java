@@ -54,6 +54,7 @@ public class CalculatorTests {
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("8");
 		calculator.calculate();
+		assertEquals("2,8", calculator.getDisplay());
 	}
 
 	@Test

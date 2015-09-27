@@ -29,10 +29,7 @@ public class Calculator {
 
 	public String getDisplay() {
 		if (buffer == null) {
-			String result = Double.toString(value);
-			if (result.endsWith(".0"))
-				result = Integer.toString((int) value);
-			return result;
+			return numberFormat.format(value);
 		} else {
 			return buffer;
 		}
