@@ -61,7 +61,13 @@ public class Calculator {
 		if (hasPrecedence(opLabel)) {
 			Double bufferValue = new Double(buffer);
 			Operation next = OPERATORS.get(opLabel);
-			nextOperation = (i1, i2) -> i1 + next.perform(bufferValue, i2);
+			Operation previous = nextOperation;
+			nextOperation = (i1, i2) -> {
+				Double intermediate = next.perform(bufferValue, i2);
+				if (previous == null)
+					return intermediate;
+				return previous.perform(i1, intermediate);
+			};
 			buffer = null;
 		} else {
 			calculate();
@@ -70,6 +76,6 @@ public class Calculator {
 	}
 
 	private boolean hasPrecedence(String opLabel) {
-		return opLabel.equals("×");
+		return "×÷".contains(opLabel);
 	}
 }

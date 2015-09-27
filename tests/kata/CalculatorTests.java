@@ -117,14 +117,14 @@ public class CalculatorTests {
 	}
 
 	@Test
-	public void divisionPrecedesAddition() {
-		calculator.enterDigit("2");
-		calculator.pressOperator("+");
+	public void divisionPrecedesSubtraction() {
+		calculator.enterDigit("4");
+		calculator.pressOperator("-");
 		calculator.enterDigit("4");
 		calculator.pressOperator("÷");
 		calculator.enterDigit("2");
 		calculator.calculate();
-		assertEquals("4", calculator.getDisplay());
+		assertEquals("2", calculator.getDisplay());
 	}
 
 }
