@@ -1,13 +1,12 @@
 package kata;
 
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class Calculator {
+	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private boolean nextPrecedes = false;
 
 	private interface Operation {
@@ -21,15 +20,13 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
-	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
-	private NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 	private String buffer = null;
 	private double value = 0;
 	private Operation nextOperation;
 
 	public String getDisplay() {
 		if (buffer == null) {
-			return numberFormat.format(value);
+			return displayFormatter.format(value);
 		} else {
 			return buffer;
 		}
@@ -37,8 +34,7 @@ public class Calculator {
 
 	// Only intended for testing.
 	void setLocale(Locale locale) {
-		dfs = new DecimalFormatSymbols(locale);
-		numberFormat = NumberFormat.getNumberInstance(locale);
+		displayFormatter = new DisplayFormatter(locale);
 	}
 
 	public void enterDigit(String digit) {
@@ -49,7 +45,7 @@ public class Calculator {
 	public void enterDecimalPointer() {
 		if (buffer == null)
 			buffer = "0";
-		buffer += dfs.getDecimalSeparator();
+		buffer += displayFormatter.getDecimalSeparator();
 	}
 
 	public void calculate() {
@@ -80,8 +76,7 @@ public class Calculator {
 
 	private double convertBufferToValue() {
 		try {
-			Number number = numberFormat.parse(buffer);
-			return number.doubleValue();
+			return displayFormatter.parse(buffer);
 		} catch (ParseException e) {
 			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
 			return 0.0; // Why do I need to put this line here? I already crashed!
