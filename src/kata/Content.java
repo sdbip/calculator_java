@@ -7,11 +7,6 @@ class Content {
 		this.buffer = buffer;
 	}
 
-	public Content(String buffer, String alternate) {
-		this(buffer);
-		if (isEmpty()) this.buffer = alternate;
-	}
-
 	static Content empty() {
 		return new Content(null);
 	}
@@ -29,7 +24,7 @@ class Content {
 		return isEmpty() ? displayFormatter.format(value) : buffer;
 	}
 
-	private boolean isEmpty() {
+	boolean isEmpty() {
 		return buffer == null;
 	}
 }

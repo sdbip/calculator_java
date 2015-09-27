@@ -19,7 +19,7 @@ class Buffer {
 	}
 
 	void appendDecimalPointer() {
-		content = new Content(buffer, "0");
+		if (content.isEmpty()) content.append("0");
 		content.append("" + displayFormatter.getDecimalSeparator());
 		buffer = content.toString();
 	}
