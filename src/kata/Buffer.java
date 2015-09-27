@@ -23,7 +23,7 @@ class Buffer {
 		return this.buffer;
 	}
 
-	double toValue(String buffer) {
+	double toValue() {
 		try {
 			return displayFormatter.parse(buffer);
 		} catch (ParseException e) {

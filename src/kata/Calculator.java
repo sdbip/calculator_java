@@ -60,7 +60,7 @@ public class Calculator {
 	}
 
 	private double convertBufferToValue() {
-		return buf.toValue(buffer);
+		return buf.toValue();
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
