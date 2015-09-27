@@ -8,7 +8,7 @@ class ContentImpl implements Content {
 	}
 
 	public Content append(String digit) {
-		return new ContentImpl(!isEmpty() ? buffer + digit : digit);
+		return new ContentImpl(buffer + digit);
 	}
 
 	public String toString() {
@@ -20,6 +20,6 @@ class ContentImpl implements Content {
 	}
 
 	public boolean isEmpty() {
-		return buffer == null;
+		return false;
 	}
 }
