@@ -77,6 +77,7 @@ public class Calculator {
 		return "×÷".contains(opLabel);
 	}
 
+	@SuppressWarnings("unused") // Needed for Locale tests
 	private void setLocale(Locale locale) {
 	displayFormatter = new DisplayFormatter(locale);
 }
