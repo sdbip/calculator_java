@@ -1,9 +1,7 @@
 package kata;
 
 public interface Content {
-	static Content empty() {
-		return new EmptyContent();
-	}
+	EmptyContent EMPTY = new EmptyContent();
 
 	Content append(String digit);
 
