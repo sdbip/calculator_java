@@ -10,12 +10,10 @@ class Buffer {
 	private Content content = Content.empty();
 
 	String getDisplayedValue(double value) {
-		Content content = new Content(buffer);
 		return content.getDisplayedValue(value, displayFormatter);
 	}
 
 	void enterDigit(String digit) {
-		content = new Content(buffer);
 		content.append(digit);
 		buffer = content.toString();
 	}
