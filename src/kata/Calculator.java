@@ -15,7 +15,6 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
-	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
 	private Buffer buf = new Buffer();
 
@@ -75,7 +74,6 @@ public class Calculator {
 
 	// Only intended for testing.
 	void setLocale(Locale locale) {
-		displayFormatter = new DisplayFormatter(locale);
-		buf.displayFormatter = displayFormatter;
+		buf.displayFormatter = new DisplayFormatter(locale);
 	}
 }
