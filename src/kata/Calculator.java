@@ -31,11 +31,6 @@ public class Calculator {
 		}
 	}
 
-	// Only intended for testing.
-	void setLocale(Locale locale) {
-		displayFormatter = new DisplayFormatter(locale);
-	}
-
 	public void enterDigit(String digit) {
 		if (buffer == null) buffer = "";
 		buffer += digit;
@@ -96,5 +91,10 @@ public class Calculator {
 
 	private boolean hasPrecedence(String opLabel) {
 		return "×÷".contains(opLabel);
+	}
+
+	// Only intended for testing.
+	void setLocale(Locale locale) {
+		displayFormatter = new DisplayFormatter(locale);
 	}
 }
