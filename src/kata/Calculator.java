@@ -1,6 +1,8 @@
 package kata;
 
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -20,6 +22,7 @@ public class Calculator {
 	}};
 
 	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
+	private NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 	private String buffer = null;
 	private double value = 0;
 	private Operation nextOperation;
@@ -38,6 +41,7 @@ public class Calculator {
 	// Only intended for testing.
 	void setLocale(Locale locale) {
 		dfs = new DecimalFormatSymbols(locale);
+		numberFormat = NumberFormat.getNumberInstance(locale);
 	}
 
 	public void enterDigit(String digit) {
@@ -72,9 +76,25 @@ public class Calculator {
 	}
 
 	private Double readBuffer() {
-		Double value = new Double(buffer);
+		Double value1 = convertBufferToValue();
 		buffer = null;
-		return value;
+		return value1;
+	}
+
+	private double convertBufferToValue() {
+		try {
+			Number number = numberFormat.parse(buffer);
+			return number.doubleValue();
+		} catch (ParseException e) {
+			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
+			return 0.0; // Why do I need to put this line here? I already crashed!
+		}
+	}
+
+	private void crashApplication(String message, Throwable e) {
+		System.out.println(message);
+		System.out.println(e.getLocalizedMessage());
+		System.exit(1);
 	}
 
 	private Double performOperation(Operation operation, Double storedValue, Double enteredValue) {

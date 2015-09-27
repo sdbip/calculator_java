@@ -48,6 +48,15 @@ public class CalculatorTests {
 	}
 
 	@Test
+	public void calculateHonorsLocale() {
+		calculator.setLocale(Locale.FRANCE);
+		calculator.enterDigit("2");
+		calculator.enterDecimalPointer();
+		calculator.enterDigit("8");
+		calculator.calculate();
+	}
+
+	@Test
 	public void decimalPointWhenEmptyAddsZero() {
 		calculator.enterDecimalPointer();
 		calculator.enterDigit("2");
