@@ -27,15 +27,8 @@ class Buffer {
 		try {
 			return displayFormatter.parse(buf);
 		} catch (ParseException e) {
-			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
-			return 0.0; // Why do I need to put this line here? I already crashed!
+			throw new RuntimeException("The input buffer has grown inconsistent. Terminating application.", e);
 		}
-	}
-
-	private void crashApplication(String message, Throwable e) {
-		System.out.println(message);
-		System.out.println(e.getLocalizedMessage());
-		System.exit(1);
 	}
 
 	// Only intended for testing.
