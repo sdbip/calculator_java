@@ -30,8 +30,9 @@ public class Calculator {
 			if (result.endsWith(".0"))
 				result = Integer.toString((int) value);
 			return result;
+		} else {
+			return buffer;
 		}
-		else return buffer;
 	}
 
 	// Only intended for testing.
