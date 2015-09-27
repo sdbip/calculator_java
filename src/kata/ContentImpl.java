@@ -18,10 +18,6 @@ class ContentImpl implements Content {
 		return buffer;
 	}
 
-	public String getDisplayedValue() {
-		return buffer;
-	}
-
 	public boolean isEmpty() {
 		return false;
 	}
