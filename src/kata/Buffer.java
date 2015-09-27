@@ -8,22 +8,22 @@ class Buffer {
 	private String buffer = null;
 
 	String getDisplayedValue(double value) {
-		return buffer == null ? displayFormatter.format(value) : buffer;
+		return isEmpty() ? displayFormatter.format(value) : buffer;
 	}
 
 	void enterDigit(String digit) {
-		buffer = buffer != null ? buffer + digit : digit;
+		buffer = !isEmpty() ? buffer + digit : digit;
 	}
 
 	void appendDecimalPointer() {
-		if (buffer == null) buffer = "0";
+		if (isEmpty()) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
 	}
 
 	double toValue() {
 		try {
 			double value = displayFormatter.parse(buffer);
-			buffer = null;
+			makeEmpty();
 			return value;
 		} catch (ParseException e) {
 			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
@@ -35,6 +35,14 @@ class Buffer {
 		System.out.println(message);
 		System.out.println(e.getLocalizedMessage());
 		System.exit(1);
+	}
+
+	private void makeEmpty() {
+		buffer = null;
+	}
+
+	private boolean isEmpty() {
+		return buffer == null;
 	}
 
 	// Only intended for testing.
