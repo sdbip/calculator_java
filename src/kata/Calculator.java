@@ -24,21 +24,15 @@ public class Calculator {
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		if (buffer == null) {
-			return displayFormatter.format(value);
-		} else {
-			return buffer;
-		}
+		return buffer != null ? buffer : displayFormatter.format(value);
 	}
 
 	public void enterDigit(String digit) {
-		if (buffer == null) buffer = "";
-		buffer += digit;
+		buffer = buffer != null ? buffer + digit : digit;
 	}
 
 	public void enterDecimalPointer() {
-		if (buffer == null)
-			buffer = "0";
+		if (buffer == null) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
 	}
 
@@ -84,9 +78,7 @@ public class Calculator {
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
-		if (operator == null)
-			return enteredValue;
-		return operator.call(storedValue, enteredValue);
+		return operator != null ? operator.call(storedValue, enteredValue) : enteredValue;
 	}
 
 	private boolean hasPrecedence(String opLabel) {
