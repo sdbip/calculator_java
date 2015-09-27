@@ -3,7 +3,8 @@ package kata;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
@@ -157,11 +158,10 @@ public class CalculatorTests {
 
 	private void setLocale(Locale locale) {
 		try {
-			Field field = Calculator.class.getDeclaredField("buffer");
-			field.setAccessible(true);
-			Buffer buffer = (Buffer) field.get(calculator);
-			buffer.setLocale(locale);
-		} catch (IllegalAccessException | NoSuchFieldException e) {
+			Method setLocale = Calculator.class.getDeclaredMethod("setLocale", Locale.class);
+			setLocale.setAccessible(true);
+			setLocale.invoke(calculator, locale);
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 			throw new RuntimeException(e); // Unchecked
 		}
 	}

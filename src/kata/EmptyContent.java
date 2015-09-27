@@ -5,12 +5,8 @@ public class EmptyContent implements Content {
 		return new ContentImpl(digit);
 	}
 
-	public String getDisplayedValue(double value, DisplayFormatter displayFormatter) {
-		return displayFormatter.format(value);
-	}
-
 	public String get() {
-		return "0"; // TODO: This must be wrong!
+		return null;
 	}
 
 	public boolean isEmpty() {

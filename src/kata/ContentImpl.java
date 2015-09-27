@@ -15,7 +15,7 @@ class ContentImpl implements Content {
 		return buffer;
 	}
 
-	public String getDisplayedValue(double value, DisplayFormatter displayFormatter) {
+	public String getDisplayedValue() {
 		return buffer;
 	}
 

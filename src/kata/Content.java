@@ -5,7 +5,6 @@ public interface Content {
 
 	Content append(String digit);
 
-	String getDisplayedValue(double value, DisplayFormatter displayFormatter);
 	String get();
 
 	boolean isEmpty();
