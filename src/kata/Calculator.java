@@ -51,25 +51,29 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		value = performOperation(nextOperation, value, new Double(buffer));
-		buffer = null;
+		value = performOperation(nextOperation, value, readBuffer());
 	}
 
 	public void pressOperator(String opLabel) {
 		if (!nextPrecedes && hasPrecedence(opLabel)) {
 			nextPrecedes = true;
-			Double bufferValue = new Double(buffer);
+			Double bufferValue = readBuffer();
 			Operation next = OPERATORS.get(opLabel);
 			Operation previous = nextOperation;
 			nextOperation = (i1, i2) -> {
 				Double intermediate = next.perform(bufferValue, i2);
 				return performOperation(previous, i1, intermediate);
 			};
-			buffer = null;
 		} else {
 			calculate();
 			nextOperation = OPERATORS.get(opLabel);
 		}
+	}
+
+	private Double readBuffer() {
+		Double value = new Double(buffer);
+		buffer = null;
+		return value;
 	}
 
 	private Double performOperation(Operation operation, Double storedValue, Double enteredValue) {
