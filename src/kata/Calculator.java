@@ -22,15 +22,15 @@ public class Calculator {
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		return buf.getDisplayedValue(value, buffer);
+		return buf.getDisplayedValue(value);
 	}
 
 	public void enterDigit(String digit) {
-		buffer = buf.enterDigit(digit, buffer);
+		buffer = buf.enterDigit(digit);
 	}
 
 	public void enterDecimalPointer() {
-		buffer = buf.appendDecimalPointer(buffer);
+		buffer = buf.appendDecimalPointer();
 	}
 
 	public void calculate() {

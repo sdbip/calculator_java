@@ -7,20 +7,19 @@ class Buffer {
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
 
-	String getDisplayedValue(double value, String buffer) {
+	String getDisplayedValue(double value) {
 		return buffer == null ? displayFormatter.format(value) : buffer;
 	}
 
-	String enterDigit(String digit, String buffer) {
-		this.buffer = buffer != null ? buffer + digit : digit;
-		return this.buffer;
+	String enterDigit(String digit) {
+		buffer = buffer != null ? buffer + digit : digit;
+		return buffer;
 	}
 
-	String appendDecimalPointer(String buffer) {
+	String appendDecimalPointer() {
 		if (buffer == null) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
-		this.buffer = buffer;
-		return this.buffer;
+		return buffer;
 	}
 
 	double toValue() {
