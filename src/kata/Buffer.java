@@ -26,11 +26,6 @@ class Buffer {
 			return buffer;
 		}
 
-		public Content clear() {
-			buffer = null;
-			return this;
-		}
-
 		public String getDisplayedValue(double value) {
 			return isEmpty() ? displayFormatter.format(value) : buffer;
 		}
@@ -72,9 +67,8 @@ class Buffer {
 	}
 
 	private String clear() {
-		String buf = buffer;
-		content = new Content(buffer);
-		content = content.clear();
+		String buf = content.toString();
+		content = new Content(null);
 		buffer = content.toString();
 		return buf;
 	}
