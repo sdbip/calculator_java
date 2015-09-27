@@ -6,13 +6,9 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Calculator {
-	private DisplayFormatter displayFormatter = new DisplayFormatter();
-	private boolean nextPrecedes = false;
-
 	private interface Operator {
 		Double call(Double storedValue, Double enteredValue);
 	}
-
 	final static Map<String, Operator> OPERATORS = new HashMap<String, Operator>() {{
 		put("+", (Double storedValue, Double enteredValue) -> storedValue + enteredValue);
 		put("×", (Double storedValue, Double enteredValue) -> storedValue * enteredValue);
@@ -20,9 +16,12 @@ public class Calculator {
 		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
+	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
+
 	private double value = 0;
 	private Operator nextOperator;
+	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
 		if (buffer == null) {
