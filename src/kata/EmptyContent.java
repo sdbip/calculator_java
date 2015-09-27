@@ -12,7 +12,4 @@ public class EmptyContent implements Content {
 		return null;
 	}
 
-	public boolean isEmpty() {
-		return true;
-	}
 }

@@ -8,6 +8,4 @@ public interface Content {
 
 	String get();
 
-	boolean isEmpty();
-
 }

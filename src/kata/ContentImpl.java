@@ -18,7 +18,4 @@ class ContentImpl implements Content {
 		return buffer;
 	}
 
-	public boolean isEmpty() {
-		return false;
-	}
 }
