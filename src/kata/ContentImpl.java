@@ -1,14 +1,14 @@
 package kata;
 
-class Content {
+class ContentImpl {
 	String buffer;
 
-	public Content(String buffer) {
+	public ContentImpl(String buffer) {
 		this.buffer = buffer;
 	}
 
-	static Content empty() {
-		return new Content(null);
+	static ContentImpl empty() {
+		return new ContentImpl(null);
 	}
 
 	public void append(String digit) {
