@@ -12,6 +12,15 @@ class Buffer {
 			this.buffer = buffer;
 		}
 
+		public Content(String buffer, String alternate) {
+			if (isEmpty()) {
+				Buffer.this.buffer = ""; // !isEmpty() in append()
+				this.buffer = alternate;
+			} else {
+				this.buffer = buffer;
+			}
+		}
+
 		public void append(String digit) {
 			buffer = !isEmpty() ? buffer + digit : digit;
 		}
@@ -36,8 +45,9 @@ class Buffer {
 	}
 
 	void appendDecimalPointer() {
-		if (isEmpty()) buffer = "0";
-		buffer += displayFormatter.getDecimalSeparator();
+		Content content = new Content(buffer, "0");
+		content.append("" + displayFormatter.getDecimalSeparator());
+		buffer = content.toString();
 	}
 
 	double toValue() {
