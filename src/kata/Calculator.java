@@ -9,14 +9,14 @@ public class Calculator {
 	private boolean nextPrecedes = false;
 
 	private interface Operation {
-		Double perform(Double value, Double next);
+		Double perform(Double storedValue, Double enteredValue);
 	}
 
 	final Map<String, Operation> OPERATORS = new HashMap<String, Operation>() {{
-		put("+", (Double i1, Double i2) -> i1 + i2);
-		put("×", (Double i1, Double i2) -> i1 * i2);
-		put("−", (Double i1, Double i2) -> i1 - i2);
-		put("÷", (Double i1, Double i2) -> i1 / i2);
+		put("+", (Double storedValue, Double enteredValue) -> storedValue + enteredValue);
+		put("×", (Double storedValue, Double enteredValue) -> storedValue * enteredValue);
+		put("−", (Double storedValue, Double enteredValue) -> storedValue - enteredValue);
+		put("÷", (Double storedValue, Double enteredValue) -> storedValue / enteredValue);
 	}};
 
 	private DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.getDefault());
@@ -60,9 +60,9 @@ public class Calculator {
 			Double bufferValue = readBuffer();
 			Operation next = OPERATORS.get(opLabel);
 			Operation previous = nextOperation;
-			nextOperation = (i1, i2) -> {
-				Double intermediate = next.perform(bufferValue, i2);
-				return performOperation(previous, i1, intermediate);
+			nextOperation = (storedValue, enteredValue) -> {
+				Double intermediate = next.perform(bufferValue, enteredValue);
+				return performOperation(previous, storedValue, intermediate);
 			};
 		} else {
 			calculate();
