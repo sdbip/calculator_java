@@ -1,6 +1,5 @@
 package kata;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -18,22 +17,22 @@ public class Calculator {
 
 	private DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = null;
+	private Buffer buf = new Buffer();
 
 	private double value = 0;
 	private Operator nextOperator;
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
-		return buffer != null ? buffer : displayFormatter.format(value);
+		return buf.getDisplayedValue(displayFormatter, value, buffer);
 	}
 
 	public void enterDigit(String digit) {
-		buffer = buffer != null ? buffer + digit : digit;
+		buffer = buf.enterDigit(digit, buffer);
 	}
 
 	public void enterDecimalPointer() {
-		if (buffer == null) buffer = "0";
-		buffer += displayFormatter.getDecimalSeparator();
+		buffer = buf.appendDecimalPointer(buffer, displayFormatter);
 	}
 
 	public void calculate() {
@@ -57,24 +56,13 @@ public class Calculator {
 	}
 
 	private Double readBuffer() {
-		Double value1 = convertBufferToValue();
+		Double value = convertBufferToValue();
 		buffer = null;
-		return value1;
+		return value;
 	}
 
 	private double convertBufferToValue() {
-		try {
-			return displayFormatter.parse(buffer);
-		} catch (ParseException e) {
-			crashApplication("The input buffer has grown inconsistent. Terminating application.", e);
-			return 0.0; // Why do I need to put this line here? I already crashed!
-		}
-	}
-
-	private void crashApplication(String message, Throwable e) {
-		System.out.println(message);
-		System.out.println(e.getLocalizedMessage());
-		System.exit(1);
+		return buf.toValue(displayFormatter, buffer, this);
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
