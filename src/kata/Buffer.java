@@ -11,15 +11,13 @@ class Buffer {
 		return buffer == null ? displayFormatter.format(value) : buffer;
 	}
 
-	String enterDigit(String digit) {
+	void enterDigit(String digit) {
 		buffer = buffer != null ? buffer + digit : digit;
-		return buffer;
 	}
 
-	String appendDecimalPointer() {
+	void appendDecimalPointer() {
 		if (buffer == null) buffer = "0";
 		buffer += displayFormatter.getDecimalSeparator();
-		return buffer;
 	}
 
 	double toValue() {
