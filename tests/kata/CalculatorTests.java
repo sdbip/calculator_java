@@ -21,4 +21,12 @@ public class CalculatorTests {
 		assertEquals(3.5, calculator.getValue(), 0);
 	}
 
+	@Test
+	public void knowsHowToMultiply() {
+		Calculator calculator = new Calculator();
+		calculator.enter(2.0);
+		calculator.multiply(0.5);
+		assertEquals(1.0, calculator.getValue(), 0);
+	}
+
 }

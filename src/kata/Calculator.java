@@ -15,4 +15,8 @@ public class Calculator {
 	public void add(double value) {
 		this.value += value;
 	}
+
+	public void multiply(double value) {
+		this.value *= value;
+	}
 }
