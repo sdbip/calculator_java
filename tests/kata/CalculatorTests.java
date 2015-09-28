@@ -137,7 +137,7 @@ public class CalculatorTests {
 	@Test
 	public void divisionPrecedesSubtraction() {
 		calculator.enterDigit("4");
-		calculator.pressOperator("-");
+		calculator.pressOperator("−");
 		calculator.enterDigit("4");
 		calculator.pressOperator("÷");
 		calculator.enterDigit("2");
