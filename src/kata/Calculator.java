@@ -42,17 +42,19 @@ public class Calculator {
 	public void pressOperator(String opLabel) {
 		if (!nextPrecedes && hasPrecedence(opLabel)) {
 			nextPrecedes = true;
-			Double bufferValue = fromBuffer();
-			Operator next = OPERATORS.get(opLabel);
-			Operator previous = nextOperator;
-			nextOperator = (storedValue, enteredValue) -> {
-				Double intermediate = next.call(bufferValue, enteredValue);
-				return callOperator(previous, storedValue, intermediate);
-			};
+			nextOperator = precedeBy(OPERATORS.get(opLabel), nextOperator);
 		} else {
 			calculate();
 			nextOperator = OPERATORS.get(opLabel);
 		}
+	}
+
+	private Operator precedeBy(Operator next, Operator previous) {
+		Double bufferValue = fromBuffer();
+		return (storedValue, enteredValue) -> {
+			Double intermediate = next.call(bufferValue, enteredValue);
+			return callOperator(previous, storedValue, intermediate);
+		};
 	}
 
 
