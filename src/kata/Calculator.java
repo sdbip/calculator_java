@@ -19,7 +19,7 @@ public class Calculator {
 	private Content content = Content.EMPTY;
 
 	private double value = 0;
-	private Operator nextOperator;
+	private Operator nextOperator = (l, r) -> r;
 	private boolean nextPrecedes = false;
 
 	public String getDisplay() {
@@ -36,7 +36,7 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		value = callOperator(nextOperator, value, fromBuffer());
+		value = nextOperator.call(value, fromBuffer());
 	}
 
 	public void pressOperator(String opLabel) {
@@ -53,7 +53,7 @@ public class Calculator {
 		Double bufferValue = fromBuffer();
 		return (storedValue, enteredValue) -> {
 			Double intermediate = next.call(bufferValue, enteredValue);
-			return callOperator(previous, storedValue, intermediate);
+			return previous.call(storedValue, intermediate);
 		};
 	}
 
@@ -62,10 +62,6 @@ public class Calculator {
 		double value = content.getValue(displayFormatter);
 		content = Content.EMPTY;
 		return value;
-	}
-
-	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {
-		return operator != null ? operator.call(storedValue, enteredValue) : enteredValue;
 	}
 
 	private boolean hasPrecedence(String opLabel) {
