@@ -44,6 +44,7 @@ public class Calculator {
 			nextPrecedes = true;
 			nextOperator = precedeBy(OPERATORS.get(opLabel), nextOperator);
 		} else {
+			// TODO: nextPrecedes = false; ?
 			calculate();
 			nextOperator = OPERATORS.get(opLabel);
 		}
