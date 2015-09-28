@@ -1,11 +1,18 @@
 package kata;
 
 public class Calculator {
+	private double value;
+
 	public void enter(double value) {
 
+		this.value = value;
 	}
 
 	public double getValue() {
-		return 2.0;
+		return value;
+	}
+
+	public void add(double value) {
+		this.value += value;
 	}
 }
