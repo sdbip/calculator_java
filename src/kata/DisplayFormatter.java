@@ -20,9 +20,13 @@ public class DisplayFormatter {
 		return numberFormat.format(value);
 	}
 
-	double parse(String source) throws ParseException {
-		Number number = numberFormat.parse(source);
-		return number.doubleValue();
+	double parse(String source) {
+		try {
+			Number number = numberFormat.parse(source);
+			return number.doubleValue();
+		} catch (ParseException e) {
+			throw new RuntimeException("The input buffer has grown inconsistent. Terminating application.", e);
+		}
 	}
 
 	char getDecimalSeparator() {

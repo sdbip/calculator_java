@@ -12,4 +12,12 @@ public class EmptyContent implements Content {
 		return null;
 	}
 
+	public boolean hasValue() {
+		return false;
+	}
+
+	public double getValue(DisplayFormatter formatter) {
+		return 0;
+	}
+
 }

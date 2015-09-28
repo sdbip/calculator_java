@@ -8,4 +8,6 @@ public interface Content {
 
 	String get();
 
+	boolean hasValue();
+	double getValue(DisplayFormatter formatter);
 }

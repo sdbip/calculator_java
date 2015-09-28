@@ -1,6 +1,5 @@
 package kata;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -37,13 +36,13 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		value = callOperator(nextOperator, value, toValue());
+		value = callOperator(nextOperator, value, fromBuffer());
 	}
 
 	public void pressOperator(String opLabel) {
 		if (!nextPrecedes && hasPrecedence(opLabel)) {
 			nextPrecedes = true;
-			Double bufferValue = toValue();
+			Double bufferValue = fromBuffer();
 			Operator next = OPERATORS.get(opLabel);
 			Operator previous = nextOperator;
 			nextOperator = (storedValue, enteredValue) -> {
@@ -57,16 +56,10 @@ public class Calculator {
 	}
 
 
-	double toValue() {
-		String buf = content.get();
+	double fromBuffer() {
+		double value = content.getValue(displayFormatter);
 		content = Content.EMPTY;
-		try {
-			return displayFormatter.parse(buf);
-		} catch (ParseException e) {
-			throw new RuntimeException("The input buffer has grown inconsistent. Terminating application.", e);
-		} catch (NullPointerException _) {
-			return 0;
-		}
+		return value;
 	}
 
 	private Double callOperator(Operator operator, Double storedValue, Double enteredValue) {

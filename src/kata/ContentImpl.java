@@ -18,4 +18,12 @@ class ContentImpl implements Content {
 		return buffer;
 	}
 
+	public boolean hasValue() {
+		return true;
+	}
+
+	public double getValue(DisplayFormatter formatter) {
+		return formatter.parse(buffer);
+	}
+
 }
