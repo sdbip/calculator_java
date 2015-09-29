@@ -81,4 +81,14 @@ public class CalculatorTests {
 		assertEquals(6.0, calculator.calculate(), 0);
 	}
 
+	@Test
+	public void canCalculateComplexExpression() {
+		calculator.enter(10.0);
+		calculator.subtract(3.0);
+		calculator.multiply(2.0);
+		calculator.subtract(1.0);
+		calculator.add(4.0);
+		assertEquals(10 - 3*2 - 1 + 4, calculator.calculate(), 0);
+	}
+
 }
