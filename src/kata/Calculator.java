@@ -15,10 +15,9 @@ public class Calculator {
 	}
 
 	public void add(double value) {
-		double operand0 = this.value;
-		enter(value);
-		this.value = calculate();
-		deferredOperator = x -> operand0 + x;
+		double operand = this.value;
+		this.value = deferredOperator.call(value);
+		deferredOperator = x -> operand + x;
 	}
 
 	public void multiply(double value) {
