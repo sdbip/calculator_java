@@ -10,7 +10,7 @@ public class Calculator {
 		value = operand;
 	}
 
-	public double calculate() {
+	public double getResult() {
 		value = deferredOperator.call(value);
 		deferredOperator = IDENTITY_OPERATOR;
 		return value;
