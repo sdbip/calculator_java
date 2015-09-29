@@ -64,4 +64,13 @@ public class CalculatorTests {
 		assertEquals(-0.5, calculator.calculate(), 0);
 	}
 
+	@Test
+	public void canAddMultipleNumbers() {
+		calculator.enter(1.0);
+		calculator.add(3.0);
+		calculator.add(3.0);
+		calculator.add(3.0);
+		assertEquals(10, calculator.calculate(), 0);
+	}
+
 }
