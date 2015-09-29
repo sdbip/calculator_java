@@ -28,6 +28,20 @@ public class CalculatorTests {
 	}
 
 	@Test
+	public void knowsHowToSubtract() {
+		calculator.enter(2.0);
+		calculator.subtract(1.5);
+		assertEquals(0.5, calculator.getValue(), 0);
+	}
+
+	@Test
+	public void knowsHowToDivide() {
+		calculator.enter(2.0);
+		calculator.divide(0.5);
+		assertEquals(4.0, calculator.getValue(), 0);
+	}
+
+	@Test
 	public void knowsHowToMultiply() {
 		calculator.enter(2.0);
 		calculator.multiply(0.5);

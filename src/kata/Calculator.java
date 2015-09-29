@@ -19,4 +19,12 @@ public class Calculator {
 	public void multiply(double value) {
 		this.value *= value;
 	}
+
+	public void subtract(double value) {
+		this.value -= value;
+	}
+
+	public void divide(double value) {
+		this.value /= value;
+	}
 }
