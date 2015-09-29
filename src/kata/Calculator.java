@@ -11,7 +11,9 @@ public class Calculator {
 	}
 
 	public double calculate() {
-		return deferredOperator.call(value);
+		value = deferredOperator.call(value);
+		deferredOperator = IDENTITY_OPERATOR;
+		return value;
 	}
 
 	public void add(double value) {

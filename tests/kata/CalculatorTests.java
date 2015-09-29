@@ -91,4 +91,13 @@ public class CalculatorTests {
 		assertEquals(10 - 3*2 - 1 + 4, calculator.calculate(), 0);
 	}
 
+	@Test
+	public void calculateClearsDeferredOperator() {
+		calculator.enter(5.0);
+		calculator.subtract(3.0);
+		calculator.calculate();
+		calculator.multiply(2.0);
+		assertEquals(4.0, calculator.calculate(), 0);
+	}
+
 }
