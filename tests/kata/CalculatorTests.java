@@ -56,4 +56,12 @@ public class CalculatorTests {
 		assertEquals(7.0, calculator.calculate(), 0);
 	}
 
+	@Test
+	public void precedesDivisionOverSubtraction() {
+		calculator.enter(1.0);
+		calculator.subtract(3.0);
+		calculator.divide(2.0);
+		assertEquals(-0.5, calculator.calculate(), 0);
+	}
+
 }
