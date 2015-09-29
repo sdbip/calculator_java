@@ -26,9 +26,7 @@ public class Calculator {
 	}
 
 	public void subtract(double value) {
-		double operand0 = this.value;
-		this.value = value;
-		deferredOperator = x -> operand0 - x;
+		add(-value);
 	}
 
 	public void divide(double value) {

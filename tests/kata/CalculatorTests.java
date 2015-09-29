@@ -73,4 +73,12 @@ public class CalculatorTests {
 		assertEquals(10, calculator.calculate(), 0);
 	}
 
+	@Test
+	public void canSubtractMultiple() {
+		calculator.enter(10.0);
+		calculator.subtract(3.0);
+		calculator.subtract(1.0);
+		assertEquals(6.0, calculator.calculate(), 0);
+	}
+
 }
