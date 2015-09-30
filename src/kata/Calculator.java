@@ -71,23 +71,27 @@ public class Calculator {
 	}
 
 	public void pushPlus() {
-		calculate();
-		deferred.push(new Operation(this.value, Operator.PLUS));
+		pushOperator(Operator.PLUS);
 	}
 
 	public void pushMinus() {
-		calculate();
-		deferred.push(new Operation(this.value, Operator.MINUS));
+		pushOperator(Operator.MINUS);
 	}
 
 	public void pushTimes() {
-		calculateForHighPrecedence();
-		deferred.push(new Operation(this.value, Operator.TIMES));
+		pushOperator(Operator.TIMES);
 	}
 
 	public void pushDivide() {
-		calculateForHighPrecedence();
-		deferred.push(new Operation(this.value, Operator.DIVIDE));
+		pushOperator(Operator.DIVIDE);
+	}
+
+	private void pushOperator(Operator operator) {
+		if (operator.hasPrecedence)
+			calculateForHighPrecedence();
+		else
+			calculate();
+		deferred.push(new Operation(this.value, operator));
 	}
 
 	private void calculateForHighPrecedence() {
