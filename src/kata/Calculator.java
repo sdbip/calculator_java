@@ -45,20 +45,20 @@ public class Calculator {
 	}
 
 	public void pushMinus() {
-		double value = new Double(buffer);
-		buffer = "";
+		calculate();
+		double value = this.value;
 		deferred = x -> value - x;
 	}
 
 	public void pushTimes() {
-		double value = new Double(buffer);
-		buffer = "";
+		calculate();
+		double value = this.value;
 		deferred = x -> value * x;
 	}
 
 	public void pushDivide() {
-		double value = new Double(buffer);
-		buffer = "";
+		calculate();
+		double value = this.value;
 		deferred = x -> value / x;
 	}
 

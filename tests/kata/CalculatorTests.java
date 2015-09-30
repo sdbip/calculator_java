@@ -94,6 +94,39 @@ public class CalculatorTests {
 		assertEquals("5", calculator.display());
 	}
 
+	@Test
+	public void canSubtractRepeatedly() {
+		pushDigits('5');
+		calculator.pushMinus();
+		pushDigits('2');
+		calculator.pushMinus();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("1", calculator.display());
+	}
+
+	@Test
+	public void canMultiplyRepeatedly() {
+		pushDigits('2');
+		calculator.pushTimes();
+		pushDigits('3');
+		calculator.pushTimes();
+		pushDigits('5');
+		calculator.calculate();
+		assertEquals("30", calculator.display());
+	}
+
+	@Test
+	public void canDivideRepeatedly() {
+		pushDigits('3', '0');
+		calculator.pushDivide();
+		pushDigits('2');
+		calculator.pushDivide();
+		pushDigits('5');
+		calculator.calculate();
+		assertEquals("3", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
