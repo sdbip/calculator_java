@@ -7,16 +7,26 @@ public class Calculator {
 	private interface Operator {
 		double call(double value);
 	}
+
 	String buffer = "";
+	double value = 0;
 
 	private char decimalPoint = '.';
-	private Operator deferred;
+	private Operator deferred = o -> o;
 	public void pushDigit(char digit) {
 		buffer += digit;
 	}
 
 	public String display() {
-		return buffer;
+		if (buffer.length() == 0) {
+			String display = Double.toString(value);
+			if (display.endsWith(".0")) {
+				display = display.substring(0, display.length() - 2);
+			}
+			return display;
+		} else {
+			return buffer;
+		}
 	}
 
 	public void pushDecimalPoint() {
@@ -29,8 +39,8 @@ public class Calculator {
 	}
 
 	public void pushPlus() {
-		double value = new Double(buffer);
-		buffer = "";
+		calculate();
+		double value = this.value;
 		deferred = x -> value + x;
 	}
 
@@ -53,10 +63,8 @@ public class Calculator {
 	}
 
 	public void calculate() {
-		double value = new Double(buffer);
-		value = deferred.call(value);
-		buffer = Double.toString(value);
-		if (buffer.endsWith(".0"))
-			buffer = buffer.substring(0, buffer.length() - 2);
+		double value = buffer.length() == 0 ? this.value : new Double(buffer);
+		buffer = "";
+		this.value = deferred.call(value);
 	}
 }

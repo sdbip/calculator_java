@@ -83,6 +83,17 @@ public class CalculatorTests {
 		assertEquals("3", calculator.display());
 	}
 
+	@Test
+	public void canAddRepeatedly() {
+		pushDigits('1');
+		calculator.pushPlus();
+		pushDigits('2');
+		calculator.pushPlus();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("5", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
