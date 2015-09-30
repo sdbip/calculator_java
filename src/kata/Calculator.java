@@ -7,11 +7,10 @@ public class Calculator {
 	private interface Operator {
 		double call(double value);
 	}
-
 	String buffer = "";
+
 	private char decimalPoint = '.';
 	private Operator deferred;
-
 	public void pushDigit(char digit) {
 		buffer += digit;
 	}
@@ -33,6 +32,12 @@ public class Calculator {
 		double value = new Double(buffer);
 		buffer = "";
 		deferred = x -> value + x;
+	}
+
+	public void pushMinus() {
+		double value = new Double(buffer);
+		buffer = "";
+		deferred = x -> value - x;
 	}
 
 	public void calculate() {

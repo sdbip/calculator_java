@@ -56,6 +56,15 @@ public class CalculatorTests {
 		assertEquals("3", calculator.display());
 	}
 
+	@Test
+	public void canSubtract() {
+		pushDigits('3');
+		calculator.pushMinus();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("1", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
