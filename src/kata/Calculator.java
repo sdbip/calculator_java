@@ -62,39 +62,39 @@ public class Calculator {
 	}
 
 	public void pushTimes() {
-		if (!deferred.empty() && !deferred.peek().hasPrecedence) {
-			if (buffer.length() != 0) {
-				this.value = new Double(buffer);
-				buffer = "";
-			}
-		} else {
-			calculate();
-		}
-
+		calculateForHighPrecedence();
 		double value = this.value;
 		deferred.push(new Operator(true, x -> value * x));
 	}
 
 	public void pushDivide() {
-		if (!deferred.empty() && !deferred.peek().hasPrecedence) {
-			if (buffer.length() != 0) {
-				this.value = new Double(buffer);
-				buffer = "";
-			}
-		} else {
-			calculate();
-		}
-
+		calculateForHighPrecedence();
 		double value = this.value;
 		deferred.push(new Operator(true, x -> value / x));
 	}
 
+	private void calculateForHighPrecedence() {
+		if (hasDeferredOperatorWithLowPrecedence())
+			clearBuffer();
+		else
+			calculate();
+	}
+
+	private boolean hasDeferredOperatorWithLowPrecedence() {
+		return !deferred.empty() && !deferred.peek().hasPrecedence;
+	}
+
 	public void calculate() {
-		double value = buffer.length() == 0 ? this.value : new Double(buffer);
-		buffer = "";
+		clearBuffer();
 		while (!deferred.empty()) {
 			value = deferred.pop().operation.call(value);
 		}
-		this.value = value;
+	}
+
+	private void clearBuffer() {
+		if (buffer.length() != 0) {
+			value = new Double(buffer);
+			buffer = "";
+		}
 	}
 }
