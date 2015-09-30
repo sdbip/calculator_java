@@ -76,9 +76,17 @@ public class Calculator {
 	}
 
 	public void pushDivide() {
-		calculate();
+		if (!deferred.empty() && !deferred.peek().hasPrecedence) {
+			if (buffer.length() != 0) {
+				this.value = new Double(buffer);
+				buffer = "";
+			}
+		} else {
+			calculate();
+		}
+
 		double value = this.value;
-		deferred.push(new Operator(false, x -> value / x));
+		deferred.push(new Operator(true, x -> value / x));
 	}
 
 	public void calculate() {

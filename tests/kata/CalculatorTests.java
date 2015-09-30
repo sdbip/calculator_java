@@ -139,6 +139,17 @@ public class CalculatorTests {
 		assertEquals("7", calculator.display());
 	}
 
+	@Test
+	public void divisionPrecedesSubtraction() {
+		pushDigits('5');
+		calculator.pushMinus();
+		pushDigits('6');
+		calculator.pushDivide();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("2", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
