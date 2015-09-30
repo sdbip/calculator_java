@@ -3,26 +3,47 @@ package kata;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.function.BinaryOperator;
 
 public class Calculator {
-	private class Operator {
-		boolean hasPrecedence;
-		Operation operation;
+	private class Operation {
+		private double lhs;
+		private Operator operator;
 
-		Operator(boolean hasPrecedence, Operation operation) {
-			this.hasPrecedence = hasPrecedence;
-			this.operation = operation;
+		Operation(double lhs, Operator operator) {
+			this.lhs = lhs;
+			this.operator = operator;
+		}
+
+		boolean hasPrecedence() {
+			return operator.hasPrecedence;
+		}
+
+		double call(double rhs) {
+			return operator.function.apply(lhs, rhs);
 		}
 	}
-	private interface Operation {
-		double call(double value);
+
+	private enum Operator {
+		PLUS(false, (l, r) -> l + r),
+		MINUS(false, (l, r) -> l - r),
+		TIMES(true, (l, r) -> l * r),
+		DIVIDE(true, (l, r) -> l / r);
+
+		boolean hasPrecedence;
+		BinaryOperator<Double> function;
+
+		Operator(boolean hasPrecedence, BinaryOperator<Double> function) {
+			this.hasPrecedence = hasPrecedence;
+			this.function = function;
+		}
 	}
 
 	String buffer = "";
 	double value = 0;
 
 	private char decimalPoint = '.';
-	private Stack<Operator> deferred = new Stack<>();
+	private Stack<Operation> deferred = new Stack<>();
 
 	public void pushDigit(char digit) {
 		buffer += digit;
@@ -51,26 +72,22 @@ public class Calculator {
 
 	public void pushPlus() {
 		calculate();
-		double value = this.value;
-		deferred.push(new Operator(false, x -> value + x));
+		deferred.push(new Operation(this.value, Operator.PLUS));
 	}
 
 	public void pushMinus() {
 		calculate();
-		double value = this.value;
-		deferred.push(new Operator(false, x -> value - x));
+		deferred.push(new Operation(this.value, Operator.MINUS));
 	}
 
 	public void pushTimes() {
 		calculateForHighPrecedence();
-		double value = this.value;
-		deferred.push(new Operator(true, x -> value * x));
+		deferred.push(new Operation(this.value, Operator.TIMES));
 	}
 
 	public void pushDivide() {
 		calculateForHighPrecedence();
-		double value = this.value;
-		deferred.push(new Operator(true, x -> value / x));
+		deferred.push(new Operation(this.value, Operator.DIVIDE));
 	}
 
 	private void calculateForHighPrecedence() {
@@ -81,13 +98,13 @@ public class Calculator {
 	}
 
 	private boolean hasDeferredOperatorWithLowPrecedence() {
-		return !deferred.empty() && !deferred.peek().hasPrecedence;
+		return !deferred.empty() && !deferred.peek().hasPrecedence();
 	}
 
 	public void calculate() {
 		clearBuffer();
 		while (!deferred.empty()) {
-			value = deferred.pop().operation.call(value);
+			value = deferred.pop().call(value);
 		}
 	}
 
