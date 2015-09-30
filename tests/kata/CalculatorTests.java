@@ -45,6 +45,7 @@ public class CalculatorTests {
 		calculator.setLocale(Locale.FRANCE);
 		pushDigits('1', '3', '.', '.', '3');
 		assertEquals("13,3", calculator.display());
+		// TODO: Check "0.0" -> "0"
 	}
 
 	@Test
