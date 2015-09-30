@@ -87,18 +87,10 @@ public class Calculator {
 	}
 
 	private void pushOperator(Operator operator) {
-		if (operator.hasPrecedence)
-			calculateForHighPrecedence();
-		else
-			calculate();
+		clearBuffer();
+		if (!operator.hasPrecedence || !hasDeferredOperatorWithLowPrecedence())
+			applyDeferredOperators();
 		deferred.push(new Operation(this.value, operator));
-	}
-
-	private void calculateForHighPrecedence() {
-		if (hasDeferredOperatorWithLowPrecedence())
-			clearBuffer();
-		else
-			calculate();
 	}
 
 	private boolean hasDeferredOperatorWithLowPrecedence() {
@@ -107,6 +99,10 @@ public class Calculator {
 
 	public void calculate() {
 		clearBuffer();
+		applyDeferredOperators();
+	}
+
+	private void applyDeferredOperators() {
 		while (!deferred.empty()) {
 			value = deferred.pop().call(value);
 		}
