@@ -65,6 +65,24 @@ public class CalculatorTests {
 		assertEquals("1", calculator.display());
 	}
 
+	@Test
+	public void canMultiply() {
+		pushDigits('3');
+		calculator.pushTimes();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("6", calculator.display());
+	}
+
+	@Test
+	public void canDivide() {
+		pushDigits('6');
+		calculator.pushDivide();
+		pushDigits('2');
+		calculator.calculate();
+		assertEquals("3", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
