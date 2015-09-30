@@ -2,6 +2,7 @@ package kata;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import java.util.Stack;
 
 public class Calculator {
 	private interface Operator {
@@ -12,7 +13,9 @@ public class Calculator {
 	double value = 0;
 
 	private char decimalPoint = '.';
-	private Operator deferred = o -> o;
+	private Stack<Operator> deferred = new Stack<>();
+	private Stack<Boolean> deferredPrecedes = new Stack<>();
+
 	public void pushDigit(char digit) {
 		buffer += digit;
 	}
@@ -41,30 +44,46 @@ public class Calculator {
 	public void pushPlus() {
 		calculate();
 		double value = this.value;
-		deferred = x -> value + x;
+		deferred.push(x -> value + x);
+		deferredPrecedes.push(false);
 	}
 
 	public void pushMinus() {
 		calculate();
 		double value = this.value;
-		deferred = x -> value - x;
+		deferred.push(x -> value - x);
+		deferredPrecedes.push(false);
 	}
 
 	public void pushTimes() {
-		calculate();
+		if (!deferredPrecedes.empty() && !deferredPrecedes.peek()) {
+			if (buffer.length() != 0) {
+				this.value = new Double(buffer);
+				buffer = "";
+			}
+		} else {
+			calculate();
+		}
+
 		double value = this.value;
-		deferred = x -> value * x;
+		deferred.push(x -> value * x);
+		deferredPrecedes.push(true);
 	}
 
 	public void pushDivide() {
 		calculate();
 		double value = this.value;
-		deferred = x -> value / x;
+		deferred.push(x -> value / x);
+		deferredPrecedes.push(true);
 	}
 
 	public void calculate() {
 		double value = buffer.length() == 0 ? this.value : new Double(buffer);
 		buffer = "";
-		this.value = deferred.call(value);
+		while (!deferred.empty()) {
+			deferredPrecedes.pop();
+			value = deferred.pop().call(value);
+		}
+		this.value = value;
 	}
 }

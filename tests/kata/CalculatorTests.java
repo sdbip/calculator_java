@@ -127,6 +127,17 @@ public class CalculatorTests {
 		assertEquals("3", calculator.display());
 	}
 
+	@Test
+	public void multiplicationPrecedesAddition() {
+		pushDigits('1');
+		calculator.pushPlus();
+		pushDigits('2');
+		calculator.pushTimes();
+		pushDigits('3');
+		calculator.calculate();
+		assertEquals("7", calculator.display());
+	}
+
 
 	private void pushDigits(char... digits) {
 		for (char digit : digits) {
