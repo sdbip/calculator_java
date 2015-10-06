@@ -18,25 +18,19 @@ public class CalculatorTests {
 
 	@Test
 	public void canEnterDigits() {
-		calculator.enterDigit('1');
-		calculator.enterDigit('2');
+		enter("12");
 		assertEquals("12", calculator.display());
 	}
 
 	@Test
 	public void canEnterDecimal() {
-		calculator.enterDigit('1');
-		calculator.enterDecimalPointer();
-		calculator.enterDigit('1');
+		enter("1.1");
 		assertEquals("1.1", calculator.display());
 	}
 
 	@Test
 	public void canOnlyEnterOneDecimal() {
-		calculator.enterDigit('1');
-		calculator.enterDecimalPointer();
-		calculator.enterDecimalPointer();
-		calculator.enterDigit('1');
+		enter("1..1");
 		assertEquals("1.1", calculator.display());
 	}
 
@@ -44,10 +38,16 @@ public class CalculatorTests {
 	public void honorsLocale() {
 		calculator.setLocale(Locale.FRANCE);
 
-		calculator.enterDigit('1');
-		calculator.enterDecimalPointer();
-		calculator.enterDigit('1');
+		enter("1.1");
 		assertEquals("1,1", calculator.display());
 	}
 
+	private void enter(String value) {
+		for (char c : value.toCharArray()) {
+			if (Character.isDigit(c))
+				calculator.enterDigit(c);
+			else
+				calculator.enterDecimalPointer();
+		}
+	}
 }
