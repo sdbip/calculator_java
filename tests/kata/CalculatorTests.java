@@ -21,4 +21,12 @@ public class CalculatorTests {
 		assertEquals("12", calculator.display());
 	}
 
+	@Test
+	public void canEnterDecimal() {
+		calculator.enterDigit('1');
+		calculator.enterDecimalPointer();
+		calculator.enterDigit('1');
+		assertEquals("1.1", calculator.display());
+	}
+
 }

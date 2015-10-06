@@ -1,11 +1,17 @@
 package kata;
 
 public class Calculator {
-	public void enterDigit(char c) {
+	private String buffer = "";
 
+	public void enterDigit(char c) {
+		buffer += c;
 	}
 
 	public String display() {
-		return "12";
+		return buffer;
+	}
+
+	public void enterDecimalPointer() {
+		buffer += '.';
 	}
 }
