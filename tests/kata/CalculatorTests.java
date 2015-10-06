@@ -32,6 +32,15 @@ public class CalculatorTests {
 	}
 
 	@Test
+	public void canOnlyEnterOneDecimal() {
+		calculator.enterDigit('1');
+		calculator.enterDecimalPointer();
+		calculator.enterDecimalPointer();
+		calculator.enterDigit('1');
+		assertEquals("1.1", calculator.display());
+	}
+
+	@Test
 	public void honorsLocale() {
 		calculator.setLocale(Locale.FRANCE);
 

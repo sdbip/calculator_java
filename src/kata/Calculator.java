@@ -16,7 +16,8 @@ public class Calculator {
 	}
 
 	public void enterDecimalPointer() {
-		buffer += decimalSeparator;
+		if (buffer.indexOf(decimalSeparator) < 0)
+			buffer += decimalSeparator;
 	}
 
 	public void setLocale(Locale locale) {
