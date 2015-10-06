@@ -1,117 +1,82 @@
 package kata;
 
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-import java.util.Stack;
-import java.util.function.BinaryOperator;
+import java.util.function.Function;
+
 
 public class Calculator {
-	private class Operation {
-		private double lhs;
-		private Operator operator;
+	final DisplayBuffer displayBuffer = new DisplayBuffer();
 
-		Operation(double lhs, Operator operator) {
-			this.lhs = lhs;
-			this.operator = operator;
-		}
+	private double value = 0.0;
+	private Function<Double, Double> low;
+	private Function<Double, Double> high;
 
-		boolean hasPrecedence() {
-			return operator.hasPrecedence;
-		}
-
-		double call(double rhs) {
-			return operator.function.apply(lhs, rhs);
-		}
-	}
-
-	private enum Operator {
-		PLUS(false, (l, r) -> l + r),
-		MINUS(false, (l, r) -> l - r),
-		TIMES(true, (l, r) -> l * r),
-		DIVIDE(true, (l, r) -> l / r);
-
-		boolean hasPrecedence;
-		BinaryOperator<Double> function;
-
-		Operator(boolean hasPrecedence, BinaryOperator<Double> function) {
-			this.hasPrecedence = hasPrecedence;
-			this.function = function;
-		}
-	}
-
-	String buffer = "";
-	double value = 0;
-
-	private char decimalPoint = '.';
-	private Stack<Operation> deferred = new Stack<>();
-
-	public void pushDigit(char digit) {
-		buffer += digit;
+	public void enterDigit(char c) {
+		displayBuffer.enterDigit(c);
 	}
 
 	public String display() {
-		if (buffer.length() == 0) {
-			String display = Double.toString(value);
-			if (display.endsWith(".0")) {
-				display = display.substring(0, display.length() - 2);
-			}
-			return display;
-		} else {
-			return buffer;
-		}
+		return displayBuffer.display(value);
 	}
 
-	public void pushDecimalPoint() {
-		if (buffer.indexOf(decimalPoint) < 0)
-			buffer += decimalPoint;
+	public void enterDecimalSeparator() {
+		displayBuffer.enterDecimalSeparator();
 	}
 
-	void setLocale(Locale locale) {
-		decimalPoint = new DecimalFormatSymbols(locale).getDecimalSeparator();
+	public void pushAddition() {
+		evaluate();
+		double v = value;
+		low = rhs -> v + rhs;
 	}
 
-	public void pushPlus() {
-		pushOperator(Operator.PLUS);
+	public void pushSubtraction() {
+		evaluate();
+		double v = value;
+		low = rhs -> v - rhs;
 	}
 
-	public void pushMinus() {
-		pushOperator(Operator.MINUS);
+	public void pushDivision() {
+		if (low == null)
+			evaluate();
+		else
+			evaluateHighPrecedenceOperation();
+
+		double v = value;
+		high = rhs -> v / rhs;
 	}
 
-	public void pushTimes() {
-		pushOperator(Operator.TIMES);
+	public void pushMultiplication() {
+		if (low == null)
+			evaluate();
+		else
+			evaluateHighPrecedenceOperation();
+
+		double v = value;
+		high = rhs -> v * rhs;
 	}
 
-	public void pushDivide() {
-		pushOperator(Operator.DIVIDE);
+	public void evaluate() {
+		evaluateHighPrecedenceOperation();
+		applyLowPrecedenceOperation();
 	}
 
-	private void pushOperator(Operator operator) {
-		clearBuffer();
-		if (!operator.hasPrecedence || !hasDeferredOperatorWithLowPrecedence())
-			applyDeferredOperators();
-		deferred.push(new Operation(this.value, operator));
+	private void evaluateHighPrecedenceOperation() {
+		clearDisplayBuffer();
+		applyHighPrecedenceOperation();
 	}
 
-	private boolean hasDeferredOperatorWithLowPrecedence() {
-		return !deferred.empty() && !deferred.peek().hasPrecedence();
+	private void clearDisplayBuffer() {
+		this.value = displayBuffer.readBuffer();
+		displayBuffer.clear();
 	}
 
-	public void calculate() {
-		clearBuffer();
-		applyDeferredOperators();
+	private void applyHighPrecedenceOperation() {
+		if (high != null) value = high.apply(value);
+		high = null;
 	}
 
-	private void applyDeferredOperators() {
-		while (!deferred.empty()) {
-			value = deferred.pop().call(value);
-		}
+	private void applyLowPrecedenceOperation() {
+		if (low != null) value = low.apply(value);
+		low = null;
 	}
 
-	private void clearBuffer() {
-		if (buffer.length() != 0) {
-			value = new Double(buffer);
-			buffer = "";
-		}
-	}
 }

@@ -14,150 +14,147 @@ public class CalculatorTests {
 	@Before
 	public void setUp() throws Exception {
 		calculator = new Calculator();
+		calculator.displayBuffer.setLocale(Locale.US);
 	}
 
 	@Test
-	public void canEnter1() {
-		pushDigits('1');
-		assertEquals("1", calculator.display());
+	public void canEnterDigits() {
+		enterDigits('1', '2');
+		assertEquals("12", calculator.display());
 	}
 
 	@Test
-	public void canEnter23() {
-		pushDigits('2', '3');
-		assertEquals("23", calculator.display());
+	public void canEnterDecimal() {
+		enterDigits('1');
+		calculator.enterDecimalSeparator();
+		enterDigits('1');
+		assertEquals("1.1", calculator.display());
 	}
 
 	@Test
-	public void canEnterDecimalValues() {
-		pushDigits('1', '3', '.', '3');
-		assertEquals("13.3", calculator.display());
+	public void canOnlyEnterOneDecimal() {
+		enterDigits('1');
+		calculator.enterDecimalSeparator();
+		enterDigits('1');
+		calculator.enterDecimalSeparator();
+		assertEquals("1.1", calculator.display());
 	}
 
 	@Test
-	public void ignoresSecondDecimalPoint() {
-		pushDigits('1', '3', '.', '.', '3');
-		assertEquals("13.3", calculator.display());
+	public void addsZeroWhenPressingDecimalPointer() {
+		calculator.enterDecimalSeparator();
+		enterDigits('1');
+		assertEquals("0.1", calculator.display());
 	}
+
+	@Test
+	public void addsZeroWhenPressingDecimalPointer_localized() {
+		calculator.displayBuffer.setLocale(Locale.FRANCE);
+		calculator.enterDecimalSeparator();
+		enterDigits('1');
+		assertEquals("0,1", calculator.display());
+	}
+
 
 	@Test
 	public void honorsLocale() {
-		calculator.setLocale(Locale.FRANCE);
-		pushDigits('1', '3', '.', '.', '3');
-		assertEquals("13,3", calculator.display());
-		// TODO: Check "0.0" -> "0"
+		calculator.displayBuffer.setLocale(Locale.FRANCE);
+		enterDigits('1');
+		calculator.enterDecimalSeparator();
+		enterDigits('1');
+		calculator.enterDecimalSeparator();
+		assertEquals("1,1", calculator.display());
+	}
+
+
+	@Test
+	public void clearsBufferWhenCalculating() {
+		enter("12");
+		calculator.evaluate();
+		enter("3");
+		assertEquals("3", calculator.display());
 	}
 
 	@Test
 	public void canAdd() {
-		pushDigits('1');
-		calculator.pushPlus();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("3", calculator.display());
+		enter("12");
+		calculator.pushAddition();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("15", calculator.display());
 	}
 
 	@Test
 	public void canSubtract() {
-		pushDigits('3');
-		calculator.pushMinus();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("1", calculator.display());
-	}
-
-	@Test
-	public void canMultiply() {
-		pushDigits('3');
-		calculator.pushTimes();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("6", calculator.display());
+		enter("12");
+		calculator.pushSubtraction();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("9", calculator.display());
 	}
 
 	@Test
 	public void canDivide() {
-		pushDigits('6');
-		calculator.pushDivide();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("3", calculator.display());
+		enter("12");
+		calculator.pushDivision();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("4", calculator.display());
 	}
 
 	@Test
-	public void canAddRepeatedly() {
-		pushDigits('1');
-		calculator.pushPlus();
-		pushDigits('2');
-		calculator.pushPlus();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("5", calculator.display());
+	public void canMultiply() {
+		enter("12");
+		calculator.pushMultiplication();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("36", calculator.display());
 	}
 
 	@Test
-	public void canSubtractRepeatedly() {
-		pushDigits('5');
-		calculator.pushMinus();
-		pushDigits('2');
-		calculator.pushMinus();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("1", calculator.display());
-	}
-
-	@Test
-	public void canMultiplyRepeatedly() {
-		pushDigits('2');
-		calculator.pushTimes();
-		pushDigits('3');
-		calculator.pushTimes();
-		pushDigits('5');
-		calculator.calculate();
-		assertEquals("30", calculator.display());
-	}
-
-	@Test
-	public void canDivideRepeatedly() {
-		pushDigits('3', '0');
-		calculator.pushDivide();
-		pushDigits('2');
-		calculator.pushDivide();
-		pushDigits('5');
-		calculator.calculate();
-		assertEquals("3", calculator.display());
-	}
-
-	@Test
-	public void multiplicationPrecedesAddition() {
-		pushDigits('1');
-		calculator.pushPlus();
-		pushDigits('2');
-		calculator.pushTimes();
-		pushDigits('3');
-		calculator.calculate();
+	public void multipliesBeforeAdds() {
+		enter("1");
+		calculator.pushAddition();
+		enter("2");
+		calculator.pushMultiplication();
+		enter("3");
+		calculator.evaluate();
 		assertEquals("7", calculator.display());
 	}
 
 	@Test
-	public void divisionPrecedesSubtraction() {
-		pushDigits('5');
-		calculator.pushMinus();
-		pushDigits('6');
-		calculator.pushDivide();
-		pushDigits('2');
-		calculator.calculate();
-		assertEquals("2", calculator.display());
+	public void dividesBeforeSubtracts() {
+		enter("11");
+		calculator.pushSubtraction();
+		enter("4");
+		calculator.pushDivision();
+		enter("2");
+		calculator.evaluate();
+		assertEquals("9", calculator.display());
 	}
 
 
-	private void pushDigits(char... digits) {
-		for (char digit : digits) {
-			if (digit == '.')
-				calculator.pushDecimalPoint();
-			else
-				calculator.pushDigit(digit);
+	@Test
+	public void honorsLocaleInCalculations() {
+		calculator.displayBuffer.setLocale(Locale.FRANCE);
+		enter("2");
+		calculator.enterDecimalSeparator();
+		enter("1");
+		calculator.evaluate();
+		assertEquals("2,1", calculator.display());
+	}
+
+
+	private void enter(String digits) {
+		enterDigits(digits.toCharArray());
+	}
+
+	private void enterDigits(char... digits) {
+		for (char c : digits) {
+			calculator.enterDigit(c);
 		}
 	}
 
 }
+
+// Satvi
