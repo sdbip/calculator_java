@@ -1,7 +1,11 @@
 package kata;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public class Calculator {
 	private String buffer = "";
+	private char decimalSeparator = '.';
 
 	public void enterDigit(char c) {
 		buffer += c;
@@ -12,6 +16,10 @@ public class Calculator {
 	}
 
 	public void enterDecimalPointer() {
-		buffer += '.';
+		buffer += decimalSeparator;
+	}
+
+	public void setLocale(Locale locale) {
+		decimalSeparator = DecimalFormatSymbols.getInstance(locale).getDecimalSeparator();
 	}
 }

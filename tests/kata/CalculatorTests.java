@@ -3,6 +3,8 @@ package kata;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Locale;
+
 import static org.junit.Assert.assertEquals;
 
 public class CalculatorTests {
@@ -27,6 +29,16 @@ public class CalculatorTests {
 		calculator.enterDecimalPointer();
 		calculator.enterDigit('1');
 		assertEquals("1.1", calculator.display());
+	}
+
+	@Test
+	public void honorsLocale() {
+		calculator.setLocale(Locale.FRANCE);
+
+		calculator.enterDigit('1');
+		calculator.enterDecimalPointer();
+		calculator.enterDigit('1');
+		assertEquals("1,1", calculator.display());
 	}
 
 }
