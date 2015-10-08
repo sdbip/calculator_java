@@ -32,7 +32,7 @@ public class Calculator {
 
 	public void evaluate() {
 		try {
-			value = displayFormatter.formatter.parse(buffer).doubleValue();
+			value = displayFormatter.parse(buffer);
 			buffer = "";
 
 			if (operation != null)
