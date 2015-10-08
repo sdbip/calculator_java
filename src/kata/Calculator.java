@@ -19,6 +19,8 @@ public class Calculator {
 	}
 
 	public String display() {
+		if (buffer.length() == 0)
+			return formatter.format(value);
 		return buffer;
 	}
 
@@ -36,16 +38,15 @@ public class Calculator {
 		evaluate();
 		double value = this.value;
 		operation = v -> value + v;
-		buffer = "";
 	}
 
 	public void evaluate() {
 		try {
-			double value = formatter.parse(buffer).doubleValue();
+			value = formatter.parse(buffer).doubleValue();
+			buffer = "";
+
 			if (operation != null)
 				value = operation.apply(value);
-			this.value = value;
-			buffer = formatter.format(value);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
