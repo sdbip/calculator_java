@@ -22,4 +22,8 @@ public class DisplayFormatter {
 			throw new RuntimeException(e);
 		}
 	}
+
+	String format(double value) {
+		return formatter.format(value);
+	}
 }

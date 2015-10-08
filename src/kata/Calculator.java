@@ -14,7 +14,7 @@ public class Calculator {
 
 	public String display() {
 		if (buffer.length() == 0)
-			return displayFormatter.formatter.format(value);
+			return displayFormatter.format(value);
 		return buffer;
 	}
 
