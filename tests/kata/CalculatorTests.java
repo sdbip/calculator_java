@@ -14,6 +14,7 @@ public class CalculatorTests {
 	@Before
 	public void setUp() throws Exception {
 		calculator = new Calculator();
+		calculator.displayFormatter.setLocale(Locale.US);
 	}
 
 	@Test
@@ -53,11 +54,11 @@ public class CalculatorTests {
 
 	@Test
 	public void canAdd() {
-		enter("1");
+		enter("1.1");
 		calculator.add();
 		enter("2");
 		calculator.evaluate();
-		assertEquals("3", calculator.display());
+		assertEquals("3.1", calculator.display());
 	}
 
 	@Test

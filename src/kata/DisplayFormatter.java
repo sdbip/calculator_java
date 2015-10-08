@@ -7,8 +7,12 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public class DisplayFormatter {
-	char decimalSeparator = '.';
-	NumberFormat formatter = DecimalFormat.getInstance();
+	char decimalSeparator;
+	NumberFormat formatter;
+
+	DisplayFormatter() {
+		setLocale(Locale.getDefault());
+	}
 
 	public void setLocale(Locale locale) {
 		decimalSeparator = DecimalFormatSymbols.getInstance(locale).getDecimalSeparator();
