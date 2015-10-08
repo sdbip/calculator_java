@@ -35,7 +35,7 @@ public class CalculatorTests {
 	}
 
 	@Test
-	public void honorsLocale() {
+	public void honorsLocaleWhenEnteringNumbers() {
 		calculator.setLocale(Locale.FRANCE);
 
 		enter("1.1");
@@ -69,6 +69,17 @@ public class CalculatorTests {
 		enter("2");
 		calculator.evaluate();
 		assertEquals("5", calculator.display());
+	}
+
+	@Test
+	public void honorsLocaleWhenAdding() {
+		calculator.setLocale(Locale.FRANCE);
+
+		enter("1.1");
+		calculator.add();
+		enter("2");
+		calculator.evaluate();
+		assertEquals("3,1", calculator.display());
 	}
 
 }
