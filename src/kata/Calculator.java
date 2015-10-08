@@ -47,9 +47,7 @@ public class Calculator {
 		value = displayFormatter.parse(buffer);
 		buffer = "";
 
-		if (precedentOperation != null)
-			value = precedentOperation.apply(value);
-		precedentOperation = null;
+		applyPrecedentOperation();
 
 		double capturedValue = value;
 		precedentOperation = v -> operator.apply(capturedValue, v);
@@ -59,11 +57,22 @@ public class Calculator {
 		value = displayFormatter.parse(buffer);
 		buffer = "";
 
-		if (precedentOperation != null)
-			value = precedentOperation.apply(value);
+		applyPrecedentOperation();
+		applyPosteriorOperation();
+	}
+
+	private void applyPosteriorOperation() {
+		applyOperation(operation);
+		operation = null;
+	}
+
+	private void applyPrecedentOperation() {
+		applyOperation(precedentOperation);
+		precedentOperation = null;
+	}
+
+	private void applyOperation(Function<Double, Double> operation) {
 		if (operation != null)
 			value = operation.apply(value);
-		precedentOperation = null;
-		operation = null;
 	}
 }
