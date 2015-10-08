@@ -94,4 +94,15 @@ public class CalculatorTests {
 		assertEquals("1", calculator.display());
 	}
 
+	@Test
+	public void canMultiply() {
+		enter("6");
+		calculator.multiply();
+		enter("2");
+		calculator.multiply();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("36", calculator.display());
+	}
+
 }

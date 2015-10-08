@@ -32,6 +32,10 @@ public class Calculator {
 		setOperation((d1, d2) -> d1 - d2);
 	}
 
+	public void multiply() {
+		setOperation((d1, d2) -> d1 * d2);
+	}
+
 	private void setOperation(BinaryOperator<Double> operator) {
 		evaluate();
 		double capturedValue = value;
