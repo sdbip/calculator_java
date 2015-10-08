@@ -105,4 +105,15 @@ public class CalculatorTests {
 		assertEquals("36", calculator.display());
 	}
 
+	@Test
+	public void multipliesBeforeAddition() {
+		enter("1");
+		calculator.add();
+		enter("2");
+		calculator.multiply();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("7", calculator.display());
+	}
+
 }

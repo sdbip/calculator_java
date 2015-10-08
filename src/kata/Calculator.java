@@ -7,6 +7,7 @@ public class Calculator {
 	final DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = "";
 	private Function<Double, Double> operation;
+	private Function<Double, Double> precedentOperation;
 	private double value = 0;
 
 	public void enterDigit(char c) {
@@ -33,7 +34,7 @@ public class Calculator {
 	}
 
 	public void multiply() {
-		setOperation((d1, d2) -> d1 * d2);
+		setPrecedentOperation((d1, d2) -> d1 * d2);
 	}
 
 	private void setOperation(BinaryOperator<Double> operator) {
@@ -42,11 +43,27 @@ public class Calculator {
 		operation = v -> operator.apply(capturedValue, v);
 	}
 
+	private void setPrecedentOperation(BinaryOperator<Double> operator) {
+		value = displayFormatter.parse(buffer);
+		buffer = "";
+
+		if (precedentOperation != null)
+			value = precedentOperation.apply(value);
+		precedentOperation = null;
+
+		double capturedValue = value;
+		precedentOperation = v -> operator.apply(capturedValue, v);
+	}
+
 	public void evaluate() {
 		value = displayFormatter.parse(buffer);
 		buffer = "";
 
+		if (precedentOperation != null)
+			value = precedentOperation.apply(value);
 		if (operation != null)
 			value = operation.apply(value);
+		precedentOperation = null;
+		operation = null;
 	}
 }
