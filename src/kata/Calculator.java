@@ -1,15 +1,10 @@
 package kata;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Locale;
 import java.util.function.Function;
 
 public class Calculator {
-	private char decimalSeparator = '.';
-	private NumberFormat formatter = DecimalFormat.getInstance();
+	final DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = "";
 	private Function<Double, Double> operation;
 	private double value = 0;
@@ -20,18 +15,13 @@ public class Calculator {
 
 	public String display() {
 		if (buffer.length() == 0)
-			return formatter.format(value);
+			return displayFormatter.formatter.format(value);
 		return buffer;
 	}
 
 	public void enterDecimalPointer() {
-		if (buffer.indexOf(decimalSeparator) < 0)
-			buffer += decimalSeparator;
-	}
-
-	public void setLocale(Locale locale) {
-		decimalSeparator = DecimalFormatSymbols.getInstance(locale).getDecimalSeparator();
-		formatter = DecimalFormat.getInstance(locale);
+		if (buffer.indexOf(displayFormatter.decimalSeparator) < 0)
+			buffer += displayFormatter.decimalSeparator;
 	}
 
 	public void add() {
@@ -42,7 +32,7 @@ public class Calculator {
 
 	public void evaluate() {
 		try {
-			value = formatter.parse(buffer).doubleValue();
+			value = displayFormatter.formatter.parse(buffer).doubleValue();
 			buffer = "";
 
 			if (operation != null)
