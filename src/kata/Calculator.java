@@ -1,5 +1,6 @@
 package kata;
 
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 public class Calculator {
@@ -24,15 +25,17 @@ public class Calculator {
 	}
 
 	public void add() {
-		evaluate();
-		double value = this.value;
-		operation = v -> value + v;
+		setOperation((d1, d2) -> d1 + d2);
 	}
 
 	public void subtract() {
+		setOperation((d1, d2) -> d1 - d2);
+	}
+
+	private void setOperation(BinaryOperator<Double> operator) {
 		evaluate();
-		double value = this.value;
-		operation = v -> value - v;
+		double capturedValue = value;
+		operation = v -> operator.apply(capturedValue, v);
 	}
 
 	public void evaluate() {
