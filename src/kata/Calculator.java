@@ -29,6 +29,12 @@ public class Calculator {
 		operation = v -> value + v;
 	}
 
+	public void subtract() {
+		evaluate();
+		double value = this.value;
+		operation = v -> value - v;
+	}
+
 	public void evaluate() {
 		value = displayFormatter.parse(buffer);
 		buffer = "";

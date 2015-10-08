@@ -83,4 +83,15 @@ public class CalculatorTests {
 		assertEquals("3,1", calculator.display());
 	}
 
+	@Test
+	public void canSubtract() {
+		enter("6");
+		calculator.subtract();
+		enter("2");
+		calculator.subtract();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("1", calculator.display());
+	}
+
 }
