@@ -2,10 +2,12 @@ package kata;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
+import java.util.function.Function;
 
 public class Calculator {
-	private String buffer = "";
 	private char decimalSeparator = '.';
+	private String buffer = "";
+	private Function<Double, Double> operation;
 
 	public void enterDigit(char c) {
 		buffer += c;
@@ -25,9 +27,16 @@ public class Calculator {
 	}
 
 	public void add() {
+		evaluate();
+		double value = Double.parseDouble(buffer);
+		operation = v -> value + v;
+		buffer = "";
 	}
 
 	public void evaluate() {
-		buffer = "3";
+		double value = Double.parseDouble(buffer);
+		if (operation != null)
+			value = operation.apply(value);
+		buffer = Double.toString(value).replace(".0", "");
 	}
 }

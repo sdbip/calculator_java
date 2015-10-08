@@ -60,4 +60,15 @@ public class CalculatorTests {
 		assertEquals("3", calculator.display());
 	}
 
+	@Test
+	public void canAddRepeatedly() {
+		enter("1");
+		calculator.add();
+		enter("2");
+		calculator.add();
+		enter("2");
+		calculator.evaluate();
+		assertEquals("5", calculator.display());
+	}
+
 }
