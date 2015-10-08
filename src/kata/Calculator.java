@@ -12,6 +12,7 @@ public class Calculator {
 	private NumberFormat formatter = DecimalFormat.getInstance();
 	private String buffer = "";
 	private Function<Double, Double> operation;
+	private double value = 0;
 
 	public void enterDigit(char c) {
 		buffer += c;
@@ -33,13 +34,9 @@ public class Calculator {
 
 	public void add() {
 		evaluate();
-		try {
-			double value = formatter.parse(buffer).doubleValue();
-			operation = v -> value + v;
-			buffer = "";
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		double value = this.value;
+		operation = v -> value + v;
+		buffer = "";
 	}
 
 	public void evaluate() {
@@ -47,6 +44,7 @@ public class Calculator {
 			double value = formatter.parse(buffer).doubleValue();
 			if (operation != null)
 				value = operation.apply(value);
+			this.value = value;
 			buffer = formatter.format(value);
 		} catch (ParseException e) {
 			e.printStackTrace();
