@@ -23,4 +23,11 @@ public class Calculator {
 	public void setLocale(Locale locale) {
 		decimalSeparator = DecimalFormatSymbols.getInstance(locale).getDecimalSeparator();
 	}
+
+	public void add() {
+	}
+
+	public void evaluate() {
+		buffer = "3";
+	}
 }

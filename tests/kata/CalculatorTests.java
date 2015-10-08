@@ -50,4 +50,14 @@ public class CalculatorTests {
 				calculator.enterDecimalPointer();
 		}
 	}
+
+	@Test
+	public void canAdd() {
+		enter("1");
+		calculator.add();
+		enter("2");
+		calculator.evaluate();
+		assertEquals("3", calculator.display());
+	}
+
 }
