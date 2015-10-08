@@ -15,7 +15,11 @@ public class DisplayFormatter {
 		formatter = DecimalFormat.getInstance(locale);
 	}
 
-	double parse(String buffer) throws ParseException {
-		return formatter.parse(buffer).doubleValue();
+	double parse(String buffer) {
+		try {
+			return formatter.parse(buffer).doubleValue();
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

@@ -1,6 +1,5 @@
 package kata;
 
-import java.text.ParseException;
 import java.util.function.Function;
 
 public class Calculator {
@@ -31,14 +30,10 @@ public class Calculator {
 	}
 
 	public void evaluate() {
-		try {
-			value = displayFormatter.parse(buffer);
-			buffer = "";
+		value = displayFormatter.parse(buffer);
+		buffer = "";
 
-			if (operation != null)
-				value = operation.apply(value);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		if (operation != null)
+			value = operation.apply(value);
 	}
 }
