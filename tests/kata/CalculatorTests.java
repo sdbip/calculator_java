@@ -116,4 +116,15 @@ public class CalculatorTests {
 		assertEquals("7", calculator.display());
 	}
 
+	@Test
+	public void canDivide() {
+		enter("6");
+		calculator.divide();
+		enter("2");
+		calculator.divide();
+		enter("3");
+		calculator.evaluate();
+		assertEquals("1", calculator.display());
+	}
+
 }

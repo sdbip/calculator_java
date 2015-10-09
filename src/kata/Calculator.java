@@ -33,6 +33,10 @@ public class Calculator {
 		setOperation((d1, d2) -> d1 - d2);
 	}
 
+	public void divide() {
+		setOperation((d1, d2) -> d1 / d2);
+	}
+
 	public void multiply() {
 		setPrecedentOperation((d1, d2) -> d1 * d2);
 	}
