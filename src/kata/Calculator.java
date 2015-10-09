@@ -34,7 +34,7 @@ public class Calculator {
 	}
 
 	public void divide() {
-		setOperation((d1, d2) -> d1 / d2);
+		setPrecedentOperation((d1, d2) -> d1 / d2);
 	}
 
 	public void multiply() {

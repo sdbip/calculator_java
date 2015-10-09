@@ -127,4 +127,15 @@ public class CalculatorTests {
 		assertEquals("1", calculator.display());
 	}
 
+	@Test
+	public void dividesBeforeSubtraction() {
+		enter("5");
+		calculator.subtract();
+		enter("4");
+		calculator.divide();
+		enter("2");
+		calculator.evaluate();
+		assertEquals("3", calculator.display());
+	}
+
 }
