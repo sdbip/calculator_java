@@ -44,21 +44,25 @@ public class Calculator {
 	}
 
 	private void setPrecedentOperation(BinaryOperator<Double> operator) {
-		value = displayFormatter.parse(buffer);
-		buffer = "";
-
-		applyPrecedentOperation();
+		evaluatePrecedentOperation();
 
 		double capturedValue = value;
 		precedentOperation = v -> operator.apply(capturedValue, v);
 	}
 
+	private void evaluatePrecedentOperation() {
+		parseBuffer();
+		applyPrecedentOperation();
+	}
+
 	public void evaluate() {
+		evaluatePrecedentOperation();
+		applyPosteriorOperation();
+	}
+
+	private void parseBuffer() {
 		value = displayFormatter.parse(buffer);
 		buffer = "";
-
-		applyPrecedentOperation();
-		applyPosteriorOperation();
 	}
 
 	private void applyPosteriorOperation() {
