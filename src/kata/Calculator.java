@@ -3,6 +3,31 @@ package kata;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
+/*
+Algorithm:
+When selecting an operator the calculator will combine the "current value" and the operator into an new operator
+and store that for future input.
+The "current value" is calculated by taken the last input and apply any stored operator to it.
+
+	"1+2+3=" stores the following at each step:
+		1
+		1+
+		1+ 2
+		3+
+		3+ 3
+		6
+
+If a stored operator has lower precedence than the currently entered one that operator is not applied.
+
+	"1+2*3=" stores the following at each step:
+		1
+		1+
+		1+ 2
+		1+ 2*
+		1+ 2* 3
+		7
+ */
+
 public class Calculator {
 	final DisplayFormatter displayFormatter = new DisplayFormatter();
 	private String buffer = "";
