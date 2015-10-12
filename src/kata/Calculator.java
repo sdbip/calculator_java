@@ -3,6 +3,14 @@ package kata;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
+/* TODO: rename "posterior"
+highPrecedenceOperator
+lowPrecedenceOperator
+
+applyHigh...
+applyLow...
+*/
+
 /*
 Algorithm:
 When selecting an operator the calculator will combine the "current value" and the operator into an new operator
@@ -68,13 +76,14 @@ public class Calculator {
 
 	private void setOperation(BinaryOperator<Double> operator) {
 		evaluate();
+		// TODO: Hidden temporal dependency
 		double capturedValue = value;
 		operation = v -> operator.apply(capturedValue, v);
 	}
 
 	private void setPrecedentOperation(BinaryOperator<Double> operator) {
 		evaluatePrecedentOperation();
-
+		// TODO: Hidden temporal dependency
 		double capturedValue = value;
 		precedentOperation = v -> operator.apply(capturedValue, v);
 	}
@@ -84,7 +93,7 @@ public class Calculator {
 		applyPrecedentOperation();
 	}
 
-	public void evaluate() {
+	public void evaluate() { // TODO: rename - evaluateEntireExpression
 		evaluatePrecedentOperation();
 		applyPosteriorOperation();
 	}
